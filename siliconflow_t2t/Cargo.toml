@@ -1,0 +1,25 @@
+[package]
+name = "siliconflow_t2t"
+version = "0.1.0"
+edition = "2021"
+
+# 核心：指定编译为 动态库 + C ABI 兼容
+[lib]
+name = "siliconflow_t2t"
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# 用 dlopen/dlsym 直接调 database.so 的 post_db_query
+libc = "0.2"
+libloading = "0.8"
+
+# 同步 HTTP，只用于调 SiliconFlow 外部 API
+ureq = { version = "2", features = ["json"] }
+
+[dev-dependencies]
+tempfile = "3"
+

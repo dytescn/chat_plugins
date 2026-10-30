@@ -1,0 +1,23 @@
+{
+  "name": "deepseek",
+  "uuid": "c39f6e4d-042a-4b3e-bc8d-2a7c3336736c",
+  "version": "1.0.0",
+  "description": "deepseek api",
+  "keywords": [
+    "deepseek api",
+    "deepseek"
+  ],
+  "author": "funxdata",
+  "type": "sys",
+  "exports": {
+    "./target/release/libdeepseek.dll": "deepseek.dll",
+    "./target/release/libdeepseek.dylib": "deeepseek.dylib",
+    "./target/release/libdeepseek.so": "deepseek.so"
+  },
+  "init": [
+    "./setup.ts"
+  ],
+  "dependencies-sys": {
+    "info_lib": "0.1.0"
+  }
+}

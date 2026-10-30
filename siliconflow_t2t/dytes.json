@@ -1,0 +1,23 @@
+{
+  "name": "siliconflow_t2t",
+  "uuid": "c8b1acac-2b36-463b-84f7-c2170d31ab63",
+  "version": "1.0.0",
+  "description": "siliconflow api",
+  "keywords": [
+    "siliconflow api",
+    "siliconflow"
+  ],
+  "author": "funxdata",
+  "type": "sys",
+  "init": [
+    "./setup.ts"
+  ],
+  "platform-exports": {
+    "windows": {
+      "./target/release/siliconflow_t2t.dll": "libsiliconflow_t2t.dll"
+    }
+  },
+  "dependencies-sys": {
+    "info_lib": "0.1.0"
+  }
+}
