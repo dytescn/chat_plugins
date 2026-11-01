@@ -1,0 +1,15 @@
+{
+  "name": "chat_code_check",
+  "uuid": "4b2c3d5e-6f7a-4b8c-9d0e-1f2a3b4c5d6e",
+  "version": "0.1.0",
+  "description": "review chat content / code snippets for todos, debug output, secrets and long lines",
+  "keywords": ["chat", "code", "review", "plugin"],
+  "author": "funxdata",
+  "type": "design_plugins",
+  "license": "MIT",
+  "platform-exports": {
+    "windows": { "./target/release/chat_code_check.dll": "chat_code_check.dll" },
+    "linux": { "./target/release/libchat_code_check.so": "chat_code_check.so" },
+    "macos": { "./target/release/libchat_code_check.dylib": "chat_code_check.dylib" }
+  }
+}

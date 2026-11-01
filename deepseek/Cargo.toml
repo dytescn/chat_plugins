@@ -13,8 +13,8 @@ anyhow = "1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 
-# 用 dlopen/dlsym 直接调 database.so 的 post_db_query
-libc = "0.2"
+# 用 dlopen/dlsym 直接调 database 的 post_db_query
+libloading = "0.8"
 
 # 同步 HTTP，只用于调 SiliconFlow 外部 API
 ureq = { version = "2", features = ["json"] }

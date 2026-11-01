@@ -1,0 +1,13 @@
+# Build output
+/target/
+/target-*/
+**/target/
+
+# Local test runtime and datasets (not committed)
+/plugintest/
+/datasets/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/

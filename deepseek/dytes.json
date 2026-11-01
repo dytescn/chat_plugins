@@ -9,10 +9,16 @@
   ],
   "author": "funxdata",
   "type": "sys",
-  "exports": {
-    "./target/release/libdeepseek.dll": "deepseek.dll",
-    "./target/release/libdeepseek.dylib": "deeepseek.dylib",
-    "./target/release/libdeepseek.so": "deepseek.so"
+  "platform-exports": {
+    "windows": {
+      "./target/release/deepseek.dll": "libdeepseek.dll"
+    },
+    "linux": {
+      "./target/release/libdeepseek.so": "libdeepseek.so"
+    },
+    "macos": {
+      "./target/release/libdeepseek.dylib": "libdeepseek.dylib"
+    }
   },
   "init": [
     "./setup.ts"

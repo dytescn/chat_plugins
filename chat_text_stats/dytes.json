@@ -1,0 +1,15 @@
+{
+  "name": "chat_text_stats",
+  "uuid": "5c3d4e6f-7a8b-4c9d-0e1f-2a3b4c5d6e7f",
+  "version": "0.1.0",
+  "description": "summarize chat content with characters, lines, sentences and frequent words",
+  "keywords": ["chat", "text", "stats", "plugin"],
+  "author": "funxdata",
+  "type": "design_plugins",
+  "license": "MIT",
+  "platform-exports": {
+    "windows": { "./target/release/chat_text_stats.dll": "chat_text_stats.dll" },
+    "linux": { "./target/release/libchat_text_stats.so": "chat_text_stats.so" },
+    "macos": { "./target/release/libchat_text_stats.dylib": "chat_text_stats.dylib" }
+  }
+}

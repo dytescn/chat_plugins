@@ -1,0 +1,26 @@
+{
+  "name": "do_test_chat",
+  "uuid": "4563e8e6-b965-472e-9a22-c1f8aace423c",
+  "version": "0.1.2",
+  "description": "deterministic chat plugin for end-to-end tests",
+  "keywords": [
+    "chat",
+    "test",
+    "mock",
+    "plugin"
+  ],
+  "author": "funxdata",
+  "type": "design_plugins",
+  "license": "MIT",
+  "platform-exports": {
+    "windows": {
+      "./target/release/do_test_chat.dll": "do_test_chat.dll"
+    },
+    "linux": {
+      "./target/release/libdo_test_chat.so": "do_test_chat.so"
+    },
+    "macos": {
+      "./target/release/libdo_test_chat.dylib": "do_test_chat.dylib"
+    }
+  }
+}

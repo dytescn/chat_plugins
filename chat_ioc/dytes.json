@@ -1,0 +1,15 @@
+{
+  "name": "chat_ioc",
+  "uuid": "3a1b2c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d",
+  "version": "0.1.0",
+  "description": "extract indicators of compromise (IP / domain / hash / URL) from chat content",
+  "keywords": ["chat", "security", "ioc", "plugin"],
+  "author": "funxdata",
+  "type": "design_plugins",
+  "license": "MIT",
+  "platform-exports": {
+    "windows": { "./target/release/chat_ioc.dll": "chat_ioc.dll" },
+    "linux": { "./target/release/libchat_ioc.so": "chat_ioc.so" },
+    "macos": { "./target/release/libchat_ioc.dylib": "chat_ioc.dylib" }
+  }
+}

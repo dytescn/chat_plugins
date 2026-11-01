@@ -11,8 +11,10 @@ Piksel 的 AI 对话供应商插件集合。每个子目录是一个 Rust `cdyli
 | --- | --- | --- | --- | --- |
 | `deepseek/` | `deepseek` | `/libdeepseek` | `libdeepseek.dll` / `.dylib` / `.so` | `deepseek_app_*` |
 | `siliconflow_t2t/` | `siliconflow_t2t` | `/libsiliconflow_t2t` | `libsiliconflow_t2t.dll` | `silicon_app_*` |
+| `do_test_chat/` | `do_test_chat` | `/do_test_chat` | `do_test_chat.dll` | 无（测试插件） |
 
-两个包都是 `type: sys`，通过 `dytes.json` 声明导出文件与初始化脚本。
+`deepseek`、`siliconflow_t2t` 是 `type: sys`，安装到 `libary/`；`do_test_chat`
+是 `type: design_plugins`，安装到 `plugins/do_test_chat/`。
 
 ## 与 chatllm 的关系
 
@@ -24,7 +26,8 @@ Piksel 的 AI 对话供应商插件集合。每个子目录是一个 Rust `cdyli
       │
       └── 需要模型回复时，由调用方选择：
               ├─ /libdeepseek
-              └─ /libsiliconflow_t2t
+              ├─ /libsiliconflow_t2t
+              └─ /do_test_chat（测试）
 ```
 
 `chatllm` 不再内置 siliconflow、skills 或向量能力；本仓库的插件独立提供模型生成。
@@ -91,7 +94,11 @@ cargo test
 chat_plugins/
 ├── deepseek/             # DeepSeek Anthropic 兼容聊天
 ├── siliconflow_t2t/      # SiliconFlow 文本对话
+├── plugintest/           # 本地 cyctron 插件测试环境（运行产物不入库）
+├── todo/                 # 待办与验证记录
+├── skills/               # 开发、测试、联调、发布规范
 ├── README.md
+├── .gitignore
 └── LICENSE
 ```
 
@@ -99,3 +106,11 @@ chat_plugins/
 
 - [deepseek/README.md](deepseek/README.md)
 - [siliconflow_t2t/README.md](siliconflow_t2t/README.md)
+- [do_test_chat/README.md](do_test_chat/README.md)
+
+工作规范与目录：
+
+- [skills/README.md](skills/README.md)
+- [runflow/chat_run.md](runflow/chat_run.md)
+- [todo/TODO.md](todo/TODO.md)
+- [plugintest/README.md](plugintest/README.md)

@@ -89,3 +89,16 @@ cargo test
 
 发布产物与版本由 `dytes.json` 管理；真实调用需要在 `info.db` 中配置
 `deepseek_app_key`，并启动 cyctron。
+
+## API 文档
+
+- [Chat Completions API](docs/create-chat-completion.md)
+- [图像理解](docs/vision.md)
+- [思考模式](docs/thinking_mode.md)
+- [多轮对话](docs/multi_round_chat.md)
+- [对话前缀续写](docs/chat_prefix_completion.md)
+- [FIM 补全](docs/fim_completion.md)
+- [JSON Output](docs/json_mode.md)
+- [Tool Calls](docs/tool_calls.md)
+- [Files API](docs/files_api.md)
+- [文档索引与来源](docs/README.md)
