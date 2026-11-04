@@ -1,15 +1,12 @@
 [package]
 name = "do_test_chat"
-version = "0.1.2"
+version = "0.1.4"
 edition = "2021"
 
-# 核心：指定编译为 动态库 + C ABI 兼容
 [lib]
 name = "do_test_chat"
 crate-type = ["rlib", "cdylib"]
 
 [dependencies]
-anyhow = "1"
-libloading = "0.8"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

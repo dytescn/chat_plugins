@@ -1,7 +1,7 @@
 {
   "name": "do_test_chat",
   "uuid": "4563e8e6-b965-472e-9a22-c1f8aace423c",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "deterministic chat plugin for end-to-end tests",
   "keywords": [
     "chat",
@@ -11,16 +11,27 @@
   ],
   "author": "funxdata",
   "type": "design_plugins",
+  "use_ai": false,
+  "mcp": "mcp.json",
   "license": "MIT",
   "platform-exports": {
     "windows": {
-      "./target/release/do_test_chat.dll": "do_test_chat.dll"
+      "./target/release/do_test_chat.dll": "do_test_chat.dll",
+      "./prompts/do_test_chat.json": "prompts.json",
+      "./mcp/mcp.json": "mcp.json",
+      "./mcp/chat.json": "chat.json"
     },
     "linux": {
-      "./target/release/libdo_test_chat.so": "do_test_chat.so"
+      "./target/release/libdo_test_chat.so": "do_test_chat.so",
+      "./prompts/do_test_chat.json": "prompts.json",
+      "./mcp/mcp.json": "mcp.json",
+      "./mcp/chat.json": "chat.json"
     },
     "macos": {
-      "./target/release/libdo_test_chat.dylib": "do_test_chat.dylib"
+      "./target/release/libdo_test_chat.dylib": "do_test_chat.dylib",
+      "./prompts/do_test_chat.json": "prompts.json",
+      "./mcp/mcp.json": "mcp.json",
+      "./mcp/chat.json": "chat.json"
     }
   }
 }
