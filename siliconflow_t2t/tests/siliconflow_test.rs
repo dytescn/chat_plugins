@@ -74,7 +74,10 @@ fn test_parse_chat_response_with_id() {
     let result = parse_chat_response(body).expect("解析失败");
     assert_eq!(result.content, "你好");
     assert_eq!(result.id.as_deref(), Some("msg_123"));
-    assert_eq!(result.model.as_deref(), Some("deepseek-ai/DeepSeek-V4-Flash"));
+    assert_eq!(
+        result.model.as_deref(),
+        Some("deepseek-ai/DeepSeek-V4-Flash")
+    );
     assert_eq!(result.stop_reason.as_deref(), Some("end_turn"));
     assert!(result.usage.is_some());
 }

@@ -30,8 +30,8 @@ DeepSeek 文本对话插件。Rust `cdylib`，通过 cyctron 的 `/libdeepseek` 
 | `deepseek_app_thinking` | 思考模式 | `disabled` |
 | `deepseek_app_reasoning_effort` | 推理强度 | `high` |
 
-> 当前 `post_chat` 的 system 只取请求里的 `system` 字段；`deepseek_app_system_prompt`
-> 会被 `setup.ts` 初始化，但尚未接入请求组装。
+> `system` 优先级：请求 `system` > `deepseek_app_system_prompt`；
+> `messages` 首条已经是 system 时不重复插入。
 
 ## 请求
 
@@ -43,16 +43,21 @@ FFI-Symbol: chat
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| `prompt` | string | 单轮输入；与 `messages` 二选一 |
-| `messages` | array | 多轮消息：`{role, content}` |
-| `system` | string | 请求级 system；为空则不插入 |
+| `prompt` | string | 单轮输入；`messages` 为空时作为 user 消息 |
+| `messages` | array | 多轮消息：`{role, content}`；非空时优先于 `prompt` |
+| `system` | string | 请求级 system；未传时回落 `deepseek_app_system_prompt` |
 | `model` | string | 覆盖 setting 中的模型 |
 | `max_tokens` | number | 覆盖 setting |
 | `temperature` | number | 覆盖 setting |
 | `thinking` | object | `{ "type": "enabled" \| "disabled" }` |
 | `reasoning_effort` | string | `high` / `max` |
+| `session_id` | string | 业务会话标识；仅回显 |
 
-`prompt` 和 `messages` 都提供时，优先使用 `messages`。
+统一规则：
+
+1. `messages` 非空时使用 `messages`，忽略 `prompt`；
+2. `messages` 为空时回落 `prompt`，自动构造一条 user 消息；
+3. 两者都没有有效内容时返回 `400102`。
 
 ## 响应
 
@@ -60,18 +65,25 @@ FFI-Symbol: chat
 {
   "code": 0,
   "msg": "success",
-  "data": { "content": "模型回复" }
+  "data": {
+    "content": "模型回复",
+    "id": "msg_xxx",
+    "model": "deepseek-flash",
+    "stop_reason": "end_turn",
+    "usage": {},
+    "session_id": null
+  }
 }
 ```
 
-DeepSeek 插件只返回 `content`；不返回上游 `id`、`usage`。
+供应商未返回的字段输出 `null`。与 `siliconflow_t2t` 保持同一响应结构。
 
 ## 错误码
 
 | 码 | 含义 |
 | --- | --- |
 | `400101` | 请求 JSON 解析失败 |
-| `400102` | `prompt` / `messages` 为空或缺失 |
+| `400102` | `prompt` / `messages` 没有有效内容 |
 | `500100` | 运行时创建失败 |
 | `500101` | 读取配置或调用 DeepSeek 失败 |
 | `500102` | 上游 API 返回错误 |
@@ -92,6 +104,7 @@ cargo test
 
 ## API 文档
 
+- [统一调用协议](docs/protocol.md)
 - [Chat Completions API](docs/create-chat-completion.md)
 - [图像理解](docs/vision.md)
 - [思考模式](docs/thinking_mode.md)

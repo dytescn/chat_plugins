@@ -37,10 +37,7 @@ macro_rules! step {
 }
 
 #[no_mangle]
-pub extern "C" fn post_chat(
-    json_in: *const c_char,
-    json_out: *mut c_char,
-) -> c_int {
+pub extern "C" fn post_chat(json_in: *const c_char, json_out: *mut c_char) -> c_int {
     // 1. 解析
     let req: ChatReq = match parse_json::<ChatReq>(json_in) {
         Ok(v) => v,
@@ -57,35 +54,45 @@ pub extern "C" fn post_chat(
         Ok(c) => c,
         Err(e) => {
             step!("step2", "读取 setting 失败: {:?}", e);
-            let msg = format!("{}: {}", errcode::default_message(ERR_CHAT_REQUEST_FAILED), e);
+            let msg = format!(
+                "{}: {}",
+                errcode::default_message(ERR_CHAT_REQUEST_FAILED),
+                e
+            );
             return write_error_json(json_out, ERR_CHAT_REQUEST_FAILED, &msg);
         }
     };
 
-    // 3. 组装 messages（多轮优先；单轮拼 user）
-    let mut messages: Vec<Message> = if let Some(messages) = req.messages {
+    // 3. 组装 messages（统一规则：messages 优先；为空时回落 prompt）
+    let mut messages: Vec<Message> = if let Some(mut messages) = req.messages {
         if messages.is_empty() {
-            let code = ERR_CHAT_PROMPT_REQUIRED;
-            return write_error_json(json_out, code, "messages 不能为空");
+            match req.prompt.filter(|p| !p.trim().is_empty()) {
+                Some(prompt) => messages.push(Message::user(prompt)),
+                None => {
+                    let code = ERR_CHAT_PROMPT_REQUIRED;
+                    return write_error_json(
+                        json_out,
+                        code,
+                        "prompt 或 messages 至少提供一个有效内容",
+                    );
+                }
+            }
         }
         step!("step3", "使用多轮 messages，共 {} 条", messages.len());
         messages
-    } else if let Some(prompt) = req.prompt {
-        if prompt.is_empty() {
-            let code = ERR_CHAT_PROMPT_REQUIRED;
-            return write_error_json(json_out, code, "prompt 不能为空");
-        }
+    } else if let Some(prompt) = req.prompt.filter(|p| !p.trim().is_empty()) {
         step!("step3", "使用单轮 prompt，长度 {}", prompt.len());
         vec![Message::user(prompt)]
     } else {
         let code = ERR_CHAT_PROMPT_REQUIRED;
-        return write_error_json(json_out, code, "prompt 或 messages 至少提供一个");
+        return write_error_json(json_out, code, "prompt 或 messages 至少提供一个有效内容");
     };
 
-    // system 优先级：请求级 > setting；已有首条 system 时不重复插入
+    // system 优先级：请求级 > setting；空值忽略，首条已是 system 时不重复插入
     let system = req
         .system
-        .or_else(|| cfg.system_prompt.clone());
+        .or_else(|| cfg.system_prompt.clone())
+        .filter(|s| !s.trim().is_empty());
     if let Some(system) = system {
         if messages.first().map(|m| m.role.as_str()) != Some("system") {
             messages.insert(0, Message::system(system));
@@ -110,7 +117,12 @@ pub extern "C" fn post_chat(
     step!("step4", "调用 SiliconFlow API");
     match siliconflow_chat(&cfg.api_key, &cfg.base_url, &params) {
         Ok(result) => {
-            step!("step4", "成功，回复长度 {}，id={:?}", result.content.len(), result.id);
+            step!(
+                "step4",
+                "成功，回复长度 {}，id={:?}",
+                result.content.len(),
+                result.id
+            );
             write_success_json(
                 json_out,
                 "success",
@@ -126,7 +138,11 @@ pub extern "C" fn post_chat(
         }
         Err(e) => {
             step!("step4", "失败: {:?}", e);
-            let msg = format!("{}: {}", errcode::default_message(ERR_CHAT_REQUEST_FAILED), e);
+            let msg = format!(
+                "{}: {}",
+                errcode::default_message(ERR_CHAT_REQUEST_FAILED),
+                e
+            );
             write_error_json(json_out, ERR_CHAT_REQUEST_FAILED, &msg)
         }
     }

@@ -1,14 +1,15 @@
 use std::collections::HashMap;
 
-use siliconflow_t2t::utils::setting::{
-    build_chat_config, build_params_from_config, ChatConfig,
-};
+use siliconflow_t2t::utils::setting::{build_chat_config, build_params_from_config, ChatConfig};
 
 #[test]
 fn test_build_chat_config_full() {
     let mut m = HashMap::new();
     m.insert("silicon_app_key".to_string(), "sk-test".to_string());
-    m.insert("silicon_app_system_prompt".to_string(), "你是助手".to_string());
+    m.insert(
+        "silicon_app_system_prompt".to_string(),
+        "你是助手".to_string(),
+    );
     // ...
 
     let cfg = build_chat_config(&m).unwrap();

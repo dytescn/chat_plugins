@@ -2,7 +2,7 @@
 // DeepSeek API 调用（Anthropic 兼容格式）
 // 文档: https://api-docs.deepseek.com
 
-use anyhow::{Context, Result, bail};
+use anyhow::{bail, Context, Result};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::time::Duration;
@@ -11,7 +11,7 @@ use std::time::Duration;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Message {
-    pub role: String,       // "system" | "user" | "assistant"
+    pub role: String, // "system" | "user" | "assistant"
     pub content: String,
 }
 
@@ -41,7 +41,7 @@ impl Message {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Thinking {
     #[serde(rename = "type")]
-    pub kind: String,       // "enabled" | "disabled"
+    pub kind: String, // "enabled" | "disabled"
 }
 
 impl Thinking {
@@ -85,14 +85,59 @@ pub fn build_api_url(base_url: &str) -> String {
     }
 }
 
+// ============ 响应 ============
+
+/// Anthropic Messages 兼容响应中，本项目关心的字段。
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ChatResult {
+    pub content: String,
+    pub id: Option<String>,
+    pub model: Option<String>,
+    pub stop_reason: Option<String>,
+    pub usage: Option<Value>,
+}
+
+// ============ 响应解析（便于单元测试） ============
+
+pub fn parse_chat_response(body: &str) -> Result<ChatResult> {
+    let result: Value = serde_json::from_str(body).context("JSON 解析失败")?;
+
+    let content = result["content"]
+        .as_array()
+        .context("API 响应中缺少 content 数组")?;
+
+    let mut output = String::new();
+    for item in content {
+        if item["type"].as_str() == Some("text") {
+            if let Some(text) = item["text"].as_str() {
+                output.push_str(text);
+            }
+        }
+    }
+
+    if output.is_empty() {
+        bail!("模型未返回文本内容: {}", serde_json::to_string(&result)?);
+    }
+
+    Ok(ChatResult {
+        content: output,
+        id: result.get("id").and_then(Value::as_str).map(str::to_string),
+        model: result
+            .get("model")
+            .and_then(Value::as_str)
+            .map(str::to_string),
+        stop_reason: result
+            .get("stop_reason")
+            .and_then(Value::as_str)
+            .map(str::to_string),
+        usage: result.get("usage").cloned(),
+    })
+}
+
 // ============ 调用 ============
 
 /// 调用 DeepSeek Chat API（Anthropic 兼容格式）
-pub fn deepseek_chat(
-    api_key: &str,
-    base_url: &str,
-    params: &ChatParams,
-) -> Result<String> {
+pub fn deepseek_chat(api_key: &str, base_url: &str, params: &ChatParams) -> Result<ChatResult> {
     if api_key.is_empty() {
         bail!("api_key 为空");
     }
@@ -149,33 +194,7 @@ pub fn deepseek_chat(
     };
 
     let body = response.into_string().context("读取 API 响应失败")?;
-    let result: Value = serde_json::from_str(&body).context("JSON 解析失败")?;
-
-    // ============ 解析响应（Anthropic 格式） ============
-    // {
-    //   "content": [
-    //     { "type": "text", "text": "..." }
-    //   ]
-    // }
-    let content = result
-        .get("content")
-        .and_then(|c| c.as_array())
-        .context("API 响应中缺少 content 数组")?;
-
-    let mut output = String::new();
-    for item in content {
-        if item["type"].as_str() == Some("text") {
-            if let Some(text) = item["text"].as_str() {
-                output.push_str(text);
-            }
-        }
-    }
-
-    if output.is_empty() {
-        bail!("模型未返回文本内容: {}", serde_json::to_string(&result)?);
-    }
-
-    Ok(output)
+    parse_chat_response(&body)
 }
 
 // ============ 测试 ============

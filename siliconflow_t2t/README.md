@@ -42,8 +42,8 @@ FFI-Symbol: chat
 
 | 字段 | 类型 | 说明 |
 | --- | --- | --- |
-| `prompt` | string | 单轮输入；与 `messages` 二选一 |
-| `messages` | array | 多轮消息：`{role, content}` |
+| `prompt` | string | 单轮输入；`messages` 为空时作为 user 消息 |
+| `messages` | array | 多轮消息：`{role, content}`；非空时优先于 `prompt` |
 | `system` | string | 请求级 system；未传时回落到 `silicon_app_system_prompt` |
 | `model` | string | 覆盖 setting |
 | `max_tokens` | number | 覆盖 setting |
@@ -52,6 +52,13 @@ FFI-Symbol: chat
 | `top_k` | number | 覆盖 setting |
 | `thinking` | object | `{ "type": "enabled" \| "disabled" }` |
 | `session_id` | string | 业务会话标识；仅回传，不发送给上游 |
+
+统一规则：
+
+1. `messages` 非空时使用 `messages`，忽略 `prompt`；
+2. `messages` 为空时回落 `prompt`，自动构造一条 user 消息；
+3. 两者都没有有效内容时返回 `400102`；
+4. `system` 优先级：请求 `system` > `silicon_app_system_prompt`。
 
 ## 响应
 
@@ -75,7 +82,7 @@ FFI-Symbol: chat
 | 码 | 含义 |
 | --- | --- |
 | `400101` | 请求 JSON 解析失败 |
-| `400102` | `prompt` / `messages` 为空或缺失 |
+| `400102` | `prompt` / `messages` 没有有效内容 |
 | `500100` | 运行时创建失败 |
 | `500101` | 读取配置或调用 SiliconFlow 失败 |
 | `500102` | 上游 API 返回错误 |
@@ -93,3 +100,5 @@ cargo test
 
 发布产物见 `dytes.json` 的 `platform-exports`；真实调用需要配置
 `silicon_app_key` 并启动 cyctron。
+
+统一调用协议见 [docs/protocol.md](docs/protocol.md)。

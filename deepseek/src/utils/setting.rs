@@ -38,10 +38,7 @@ pub fn get_settings(keys: &[&str]) -> Result<HashMap<String, String>> {
         first = false;
     }
 
-    let sql = format!(
-        "SELECT key, value FROM setting WHERE key IN ({})",
-        key_list
-    );
+    let sql = format!("SELECT key, value FROM setting WHERE key IN ({})", key_list);
 
     let rows = db_query(&sql)?;
     let mut map = HashMap::with_capacity(rows.len());
@@ -60,10 +57,7 @@ pub fn get_settings(keys: &[&str]) -> Result<HashMap<String, String>> {
 }
 
 pub fn get_setting(key: &str) -> Result<Option<String>> {
-    let sql = format!(
-        "SELECT value FROM setting WHERE key = {} LIMIT 1",
-        esc(key)
-    );
+    let sql = format!("SELECT value FROM setting WHERE key = {} LIMIT 1", esc(key));
     let rows = db_query(&sql)?;
 
     if let Some(row) = rows.first() {
@@ -109,15 +103,11 @@ pub fn resolve_or(value: Option<String>, default: &str) -> String {
 }
 
 pub fn resolve_number(value: Option<String>, default: f64) -> f64 {
-    value
-        .and_then(|v| v.parse::<f64>().ok())
-        .unwrap_or(default)
+    value.and_then(|v| v.parse::<f64>().ok()).unwrap_or(default)
 }
 
 pub fn resolve_bool(value: Option<String>, default: bool) -> bool {
-    value
-        .map(|v| v == "true" || v == "1")
-        .unwrap_or(default)
+    value.map(|v| v == "true" || v == "1").unwrap_or(default)
 }
 
 pub fn map_or(map: &HashMap<String, String>, key: &str, default: &str) -> String {
@@ -147,6 +137,7 @@ pub const CHAT_SETTING_KEYS: &[&str] = &[
     "deepseek_app_model",
     "deepseek_app_max_tokens",
     "deepseek_app_temperature",
+    "deepseek_app_system_prompt",
     "deepseek_app_thinking",
     "deepseek_app_reasoning_effort",
 ];
@@ -158,6 +149,7 @@ pub struct ChatConfig {
     pub model: String,
     pub max_tokens: u32,
     pub temperature: f64,
+    pub system_prompt: Option<String>,
     pub thinking: Thinking,
     pub reasoning_effort: Option<String>,
 }
@@ -180,7 +172,14 @@ pub fn build_chat_config(map: &HashMap<String, String>) -> Result<ChatConfig> {
     let temperature = map_number(map, "deepseek_app_temperature", 0.7);
 
     let thinking_kind = map_or(map, "deepseek_app_thinking", "disabled");
-    let thinking = Thinking { kind: thinking_kind };
+    let thinking = Thinking {
+        kind: thinking_kind,
+    };
+
+    let system_prompt = map
+        .get("deepseek_app_system_prompt")
+        .filter(|s| !s.is_empty())
+        .cloned();
 
     let reasoning_effort = map
         .get("deepseek_app_reasoning_effort")
@@ -193,6 +192,7 @@ pub fn build_chat_config(map: &HashMap<String, String>) -> Result<ChatConfig> {
         model,
         max_tokens,
         temperature,
+        system_prompt,
         thinking,
         reasoning_effort,
     })

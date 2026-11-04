@@ -40,10 +40,7 @@ pub fn get_settings(keys: &[&str]) -> Result<HashMap<String, String>> {
         first = false;
     }
 
-    let sql = format!(
-        "SELECT key, value FROM setting WHERE key IN ({})",
-        key_list
-    );
+    let sql = format!("SELECT key, value FROM setting WHERE key IN ({})", key_list);
 
     let rows = db_query(&sql)?;
     let mut map = HashMap::with_capacity(rows.len());
@@ -63,10 +60,7 @@ pub fn get_settings(keys: &[&str]) -> Result<HashMap<String, String>> {
 
 /// 读单个配置值
 pub fn get_setting(key: &str) -> Result<Option<String>> {
-    let sql = format!(
-        "SELECT value FROM setting WHERE key = {} LIMIT 1",
-        esc(key)
-    );
+    let sql = format!("SELECT value FROM setting WHERE key = {} LIMIT 1", esc(key));
     let rows = db_query(&sql)?;
 
     if let Some(row) = rows.first() {
@@ -112,15 +106,11 @@ pub fn resolve_or(value: Option<String>, default: &str) -> String {
 }
 
 pub fn resolve_number(value: Option<String>, default: f64) -> f64 {
-    value
-        .and_then(|v| v.parse::<f64>().ok())
-        .unwrap_or(default)
+    value.and_then(|v| v.parse::<f64>().ok()).unwrap_or(default)
 }
 
 pub fn resolve_bool(value: Option<String>, default: bool) -> bool {
-    value
-        .map(|v| v == "true" || v == "1")
-        .unwrap_or(default)
+    value.map(|v| v == "true" || v == "1").unwrap_or(default)
 }
 
 // ============ 纯函数：从 map 取值 ============

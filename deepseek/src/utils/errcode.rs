@@ -98,5 +98,3 @@ pub fn success_json(data: serde_json::Value, msg: Option<&str>) -> serde_json::V
         "data": data
     })
 }
-
-

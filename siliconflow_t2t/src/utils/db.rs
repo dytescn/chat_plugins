@@ -1,10 +1,10 @@
 // src/utils/db.rs
 use anyhow::{Context, Result};
+use libloading::Library;
 use serde_json::Value;
 use std::ffi::{CStr, CString};
 use std::os::raw::{c_char, c_int};
 use std::sync::OnceLock;
-use libloading::Library;
 
 /// database.so 路径（相对 cwd = /home/funx/app/piksel）
 #[cfg(windows)]
@@ -25,8 +25,8 @@ static DB_LIB: OnceLock<Library> = OnceLock::new();
 static DB_QUERY_FN: OnceLock<PostDbQueryFn> = OnceLock::new();
 
 fn load_db_query() -> Result<PostDbQueryFn> {
-    let lib = unsafe { Library::new(DB_SO_PATH) }
-        .with_context(|| format!("加载 {} 失败", DB_SO_PATH))?;
+    let lib =
+        unsafe { Library::new(DB_SO_PATH) }.with_context(|| format!("加载 {} 失败", DB_SO_PATH))?;
     let f = unsafe {
         *lib.get::<PostDbQueryFn>(b"post_db_query")
             .context("dlsym post_db_query 失败")?
@@ -87,10 +87,18 @@ fn extract_rows(v: &Value) -> Vec<Value> {
     if let Some(arr) = v.get("data").and_then(|d| d.as_array()) {
         return arr.clone();
     }
-    if let Some(arr) = v.get("data").and_then(|d| d.get("list")).and_then(|l| l.as_array()) {
+    if let Some(arr) = v
+        .get("data")
+        .and_then(|d| d.get("list"))
+        .and_then(|l| l.as_array())
+    {
         return arr.clone();
     }
-    if let Some(arr) = v.get("data").and_then(|d| d.get("rows")).and_then(|r| r.as_array()) {
+    if let Some(arr) = v
+        .get("data")
+        .and_then(|d| d.get("rows"))
+        .and_then(|r| r.as_array())
+    {
         return arr.clone();
     }
     if let Some(arr) = v.get("list").and_then(|l| l.as_array()) {

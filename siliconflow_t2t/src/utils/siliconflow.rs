@@ -1,5 +1,5 @@
 // src/utils/siliconflow.rs
-use anyhow::{Context, Result, bail};
+use anyhow::{bail, Context, Result};
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use std::time::Duration;
@@ -8,19 +8,28 @@ use std::time::Duration;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Message {
-    pub role: String,       // "system" | "user" | "assistant"
+    pub role: String, // "system" | "user" | "assistant"
     pub content: String,
 }
 
 impl Message {
     pub fn system(content: impl Into<String>) -> Self {
-        Self { role: "system".into(), content: content.into() }
+        Self {
+            role: "system".into(),
+            content: content.into(),
+        }
     }
     pub fn user(content: impl Into<String>) -> Self {
-        Self { role: "user".into(), content: content.into() }
+        Self {
+            role: "user".into(),
+            content: content.into(),
+        }
     }
     pub fn assistant(content: impl Into<String>) -> Self {
-        Self { role: "assistant".into(), content: content.into() }
+        Self {
+            role: "assistant".into(),
+            content: content.into(),
+        }
     }
 }
 
@@ -92,8 +101,14 @@ pub fn parse_chat_response(body: &str) -> Result<ChatResult> {
 
     Ok(ChatResult {
         content: output,
-        id: result.get("id").and_then(|v| v.as_str()).map(str::to_string),
-        model: result.get("model").and_then(|v| v.as_str()).map(str::to_string),
+        id: result
+            .get("id")
+            .and_then(|v| v.as_str())
+            .map(str::to_string),
+        model: result
+            .get("model")
+            .and_then(|v| v.as_str())
+            .map(str::to_string),
         stop_reason: result
             .get("stop_reason")
             .and_then(|v| v.as_str())
@@ -104,11 +119,7 @@ pub fn parse_chat_response(body: &str) -> Result<ChatResult> {
 
 // ============ 调用 ============
 
-pub fn siliconflow_chat(
-    api_key: &str,
-    base_url: &str,
-    params: &ChatParams,
-) -> Result<ChatResult> {
+pub fn siliconflow_chat(api_key: &str, base_url: &str, params: &ChatParams) -> Result<ChatResult> {
     if api_key.is_empty() {
         bail!("api_key 为空");
     }
