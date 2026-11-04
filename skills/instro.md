@@ -9,6 +9,8 @@
 chat_plugins/
 ├── deepseek/              # DeepSeek Anthropic 兼容接口
 ├── siliconflow_t2t/       # SiliconFlow 文本对话
+├── think_base/            # think 阶段资源包（skills + prompts）
+├── reply_base/            # reply 阶段资源包（skills + prompts）
 ├── do_test_chat/          # 确定性测试聊天插件
 ├── runflow/               # 运行流程文档
 ├── plugintest/            # 本地插件测试环境（运行产物不入库）
@@ -19,13 +21,15 @@ chat_plugins/
 └── LICENSE
 ```
 
-## 三个插件
+## 插件与资源包
 
-| 插件 | 入口 | 端点 | 配置前缀 |
+| 名称 | 入口 | 端点 | 配置前缀 |
 | --- | --- | --- | --- |
 | `deepseek` | `post_chat` | `/libdeepseek` | `deepseek_app_*` |
 | `siliconflow_t2t` | `post_chat` | `/libsiliconflow_t2t` | `silicon_app_*` |
 | `do_test_chat` | `post_chat` | `/do_test_chat` | 无（测试插件） |
+| `think_base` | 无 | 无（资源包） | `chat_think` |
+| `reply_base` | 无 | 无（资源包） | `chat_reply` |
 
 ## 调用链
 

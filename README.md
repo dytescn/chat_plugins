@@ -1,7 +1,9 @@
 # chat_plugins
 
-Piksel 的 AI 对话供应商插件集合。每个子目录是一个 Rust `cdylib`，由 cyctron 加载，
-统一暴露 `post_chat`，只负责把对话请求转发给对应供应商并返回生成内容。
+Piksel 的 AI 对话供应商插件集合。除 `think_base/`、`reply_base/` 资源包外，
+每个子目录是一个 Rust `cdylib`，由 cyctron 加载，统一暴露 `post_chat`，
+只负责把对话请求转发给对应供应商并返回生成内容。
+`think_base/`、`reply_base/` 只包含 `skills/` 与 `prompts/`。
 
 本仓库不保存对话；对话索引与 user 消息由 `chatllm` 负责。
 
@@ -12,9 +14,12 @@ Piksel 的 AI 对话供应商插件集合。每个子目录是一个 Rust `cdyli
 | `deepseek/` | `deepseek` | `/libdeepseek` | `libdeepseek.dll` / `.dylib` / `.so` | `deepseek_app_*` |
 | `siliconflow_t2t/` | `siliconflow_t2t` | `/libsiliconflow_t2t` | `libsiliconflow_t2t.dll` | `silicon_app_*` |
 | `do_test_chat/` | `do_test_chat` | `/do_test_chat` | `do_test_chat.dll` | 无（测试插件） |
+| `think_base/` | `think_base` | 无（资源包） | 仅 `skills/`、`prompts/` | 无 |
+| `reply_base/` | `reply_base` | 无（资源包） | 仅 `skills/`、`prompts/` | 无 |
 
 `deepseek`、`siliconflow_t2t` 是 `type: sys`，安装到 `libary/`；`do_test_chat`
-是 `type: design_plugins`，安装到 `plugins/do_test_chat/`。
+是 `type: design_plugins`，安装到 `plugins/do_test_chat/`；`think_base`、
+`reply_base` 是只包含 skills 与 prompts 的资源包。
 
 ## 与 chatllm 的关系
 
@@ -54,14 +59,27 @@ FFI-Symbol: chat
 ```json
 {
   "code": 0,
-  "data": { "content": "..." },
+  "data": {
+    "content": "...",
+    "id": null,
+    "model": null,
+    "stop_reason": null,
+    "usage": null,
+    "session_id": null
+  },
   "msg": "success"
 }
 ```
 
 - 成功码为 `0`；部分调用方也把 `200` 当作成功。
 - 输出缓冲区固定 64 KiB。
-- `prompt` 与 `messages` 至少提供一个；详细字段见各插件 README。
+- 统一规则：`messages` 非空时优先；为空时回落 `prompt`；两者都无有效内容返回 `400102`。
+- `system` 优先级：请求 `system` > setting 中的 `*_app_system_prompt`。
+
+统一协议详见：
+
+- [deepseek/docs/protocol.md](deepseek/docs/protocol.md)
+- [siliconflow_t2t/docs/protocol.md](siliconflow_t2t/docs/protocol.md)
 
 ## 初始化配置
 
@@ -94,6 +112,8 @@ cargo test
 chat_plugins/
 ├── deepseek/             # DeepSeek Anthropic 兼容聊天
 ├── siliconflow_t2t/      # SiliconFlow 文本对话
+├── think_base/           # think 阶段资源包（skills + prompts）
+├── reply_base/           # reply 阶段资源包（skills + prompts）
 ├── plugintest/           # 本地 cyctron 插件测试环境（运行产物不入库）
 ├── todo/                 # 待办与验证记录
 ├── skills/               # 开发、测试、联调、发布规范
@@ -106,6 +126,8 @@ chat_plugins/
 
 - [deepseek/README.md](deepseek/README.md)
 - [siliconflow_t2t/README.md](siliconflow_t2t/README.md)
+- [think_base/README.md](think_base/README.md)
+- [reply_base/README.md](reply_base/README.md)
 - [do_test_chat/README.md](do_test_chat/README.md)
 
 工作规范与目录：
