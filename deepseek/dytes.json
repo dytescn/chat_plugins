@@ -12,19 +12,19 @@
   "platform-exports": {
     "windows": {
       "./target/release/deepseek.dll": "libdeepseek.dll",
-      "./setup.ts": "setup.ts"
+      "./setup.json": "setup.json"
     },
     "linux": {
       "./target/release/libdeepseek.so": "libdeepseek.so",
-      "./setup.ts": "setup.ts"
+      "./setup.json": "setup.json"
     },
     "macos": {
       "./target/release/libdeepseek.dylib": "libdeepseek.dylib",
-      "./setup.ts": "setup.ts"
+      "./setup.json": "setup.json"
     }
   },
   "init": [
-    "./setup.ts"
+    "./setup.json"
   ],
   "dependencies-sys": {
     "info_lib": "0.1.0"
