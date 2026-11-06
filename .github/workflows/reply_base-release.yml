@@ -1,0 +1,18 @@
+name: Release reply_base
+
+on:
+  push:
+    tags:
+      - "reply_base-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      package: reply_base
+      kind: resource
+      args: --skip-check

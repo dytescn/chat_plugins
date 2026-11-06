@@ -1,0 +1,18 @@
+name: Release chat_ioc
+
+on:
+  push:
+    tags:
+      - "chat_ioc-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      package: chat_ioc
+      kind: code
+      args: --skip-check

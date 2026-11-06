@@ -1,0 +1,17 @@
+name: Release do_test_chat
+
+on:
+  push:
+    tags:
+      - "do_test_chat-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      package: do_test_chat
+      kind: code

@@ -1,0 +1,89 @@
+name: Publish package
+
+on:
+  workflow_call:
+    inputs:
+      package:
+        description: 包目录，例如 do_test_chat
+        required: true
+        type: string
+      kind:
+        description: code（需要编译三平台）或 resource（只发布资源）
+        required: true
+        type: string
+      args:
+        description: 传给 dytes publish 的额外参数
+        required: false
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    name: Prepare
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: version
+        shell: bash
+        env:
+          PACKAGE: ${{ inputs.package }}
+        run: |
+          set -euo pipefail
+          version=$(node -p "require('./${PACKAGE}/dytes.json').version")
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            prefix="${PACKAGE}-v"
+            tag="${GITHUB_REF_NAME#${prefix}}"
+            if [ "$tag" = "${GITHUB_REF_NAME}" ] || [ "$tag" != "$version" ]; then
+              echo "tag ${GITHUB_REF_NAME} 与 ${PACKAGE}/dytes.json 版本 ${version} 不一致" >&2
+              exit 1
+            fi
+          fi
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
+
+  publish-code:
+    name: Publish ${{ inputs.package }} ${{ matrix.platform }}
+    if: ${{ inputs.kind == 'code' }}
+    needs: prepare
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        platform: [windows, linux, macos]
+    runs-on: ${{ matrix.platform == 'windows' && 'windows-latest' || matrix.platform == 'macos' && 'macos-latest' || 'ubuntu-latest' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build ${{ inputs.package }}
+        shell: bash
+        run: cargo build --release --manifest-path "${{ inputs.package }}/Cargo.toml"
+
+      - name: Publish with dytes
+        uses: dytescn/dytes@v0.1.16
+        with:
+          command: publish
+          dir: ${{ inputs.package }}
+          args: ${{ inputs.args }}
+
+  publish-resource:
+    name: Publish ${{ inputs.package }}
+    if: ${{ inputs.kind == 'resource' }}
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Publish with dytes
+        uses: dytescn/dytes@v0.1.16
+        with:
+          command: publish
+          dir: ${{ inputs.package }}
+          args: ${{ inputs.args }}

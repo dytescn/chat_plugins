@@ -6,6 +6,9 @@
   "keywords": ["chat", "code", "review", "plugin"],
   "author": "funxdata",
   "type": "design_plugins",
+  "plugins_type": "plugins",
+  "targets": ["common"],
+  "use_ai": false,
   "license": "MIT",
   "platform-exports": {
     "windows": { "./target/release/chat_code_check.dll": "chat_code_check.dll" },

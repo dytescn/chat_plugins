@@ -1,0 +1,18 @@
+name: Release think_base
+
+on:
+  push:
+    tags:
+      - "think_base-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      package: think_base
+      kind: resource
+      args: --skip-check

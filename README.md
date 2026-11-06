@@ -12,8 +12,11 @@ Piksel 的 AI 对话供应商插件集合。除 `think_base/`、`reply_base/` �
 | 目录 | 包名 | cyctron 端点 | 产物 | 配置前缀 |
 | --- | --- | --- | --- | --- |
 | `deepseek/` | `deepseek` | `/libdeepseek` | `libdeepseek.dll` / `.dylib` / `.so` | `deepseek_app_*` |
-| `siliconflow_t2t/` | `siliconflow_t2t` | `/libsiliconflow_t2t` | `libsiliconflow_t2t.dll` | `silicon_app_*` |
-| `do_test_chat/` | `do_test_chat` | `/do_test_chat` | `do_test_chat.dll` | 无（测试插件） |
+| `siliconflow_t2t/` | `siliconflow_t2t` | `/libsiliconflow_t2t` | `libsiliconflow_t2t.dll` / `.dylib` / `.so` | `silicon_app_*` |
+| `do_test_chat/` | `do_test_chat` | `/do_test_chat` | `do_test_chat.dll` / `.dylib` / `.so` | 无（测试插件） |
+| `chat_code_check/` | `chat_code_check` | `/chat_code_check` | `chat_code_check.dll` / `.dylib` / `.so` | 无 |
+| `chat_ioc/` | `chat_ioc` | `/chat_ioc` | `chat_ioc.dll` / `.dylib` / `.so` | 无 |
+| `chat_text_stats/` | `chat_text_stats` | `/chat_text_stats` | `chat_text_stats.dll` / `.dylib` / `.so` | 无 |
 | `think_base/` | `think_base` | 无（资源包） | 仅 `skills/`、`prompts/` | 无 |
 | `reply_base/` | `reply_base` | 无（资源包） | 仅 `skills/`、`prompts/` | 无 |
 
@@ -92,6 +95,34 @@ dytes install sys deepseek
 dytes install sys siliconflow_t2t
 ```
 
+## 发布
+
+每个包含 `dytes.json` 的包都有独立 workflow，按包名 tag 触发：
+
+| 包 | workflow | 类型 |
+| --- | --- | --- |
+| `deepseek` | `deepseek-release.yml` | 代码（三平台） |
+| `siliconflow_t2t` | `siliconflow_t2t-release.yml` | 代码（三平台） |
+| `do_test_chat` | `do_test_chat-release.yml` | 代码（三平台） |
+| `chat_code_check` | `chat_code_check-release.yml` | 代码（三平台） |
+| `chat_ioc` | `chat_ioc-release.yml` | 代码（三平台） |
+| `chat_text_stats` | `chat_text_stats-release.yml` | 代码（三平台） |
+| `think_base` | `think_base-release.yml` | 资源（仅发布） |
+| `reply_base` | `reply_base-release.yml` | 资源（仅发布） |
+
+发布步骤：
+
+1. 更新对应目录 `dytes.json` 的 `version`；
+2. 提交并推送；
+3. 推送 tag：`<包名>-v<版本>`，例如 `do_test_chat-v0.1.4`；
+4. workflow 校验 tag 与清单版本一致后，调用
+   [publish-package.yml](.github/workflows/publish-package.yml)：
+   - 代码包在 Windows / Linux / macOS 三平台分别 `cargo build --release`
+     并执行 `dytes publish`；
+   - 资源包只在 Ubuntu 上执行 `dytes publish`。
+
+`plugintest/` 是本地 cyctron 测试环境（`type: app`），不是可分发包，不创建发布 workflow。
+
 ## 构建与测试
 
 ```bash
@@ -112,6 +143,10 @@ cargo test
 chat_plugins/
 ├── deepseek/             # DeepSeek Anthropic 兼容聊天
 ├── siliconflow_t2t/      # SiliconFlow 文本对话
+├── do_test_chat/         # 确定性测试聊天插件
+├── chat_code_check/      # 对话代码检查插件
+├── chat_ioc/             # 对话 IOC 提取插件
+├── chat_text_stats/      # 对话文本统计插件
 ├── think_base/           # think 阶段资源包（skills + prompts）
 ├── reply_base/           # reply 阶段资源包（skills + prompts）
 ├── plugintest/           # 本地 cyctron 插件测试环境（运行产物不入库）

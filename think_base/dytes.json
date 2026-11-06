@@ -12,6 +12,8 @@
   "author": "funxdata",
   "type": "design_plugins",
   "plugins_type":"chat_think",
+  "targets": ["common"],
+  "use_ai": false,
   "license": "MIT",
   "exports": {
     "./skills/think_base.md": "think_base.md",

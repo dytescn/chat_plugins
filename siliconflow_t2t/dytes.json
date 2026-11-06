@@ -14,7 +14,16 @@
   ],
   "platform-exports": {
     "windows": {
-      "./target/release/siliconflow_t2t.dll": "libsiliconflow_t2t.dll"
+      "./target/release/siliconflow_t2t.dll": "libsiliconflow_t2t.dll",
+      "./setup.ts": "setup.ts"
+    },
+    "linux": {
+      "./target/release/libsiliconflow_t2t.so": "libsiliconflow_t2t.so",
+      "./setup.ts": "setup.ts"
+    },
+    "macos": {
+      "./target/release/libsiliconflow_t2t.dylib": "libsiliconflow_t2t.dylib",
+      "./setup.ts": "setup.ts"
     }
   },
   "dependencies-sys": {

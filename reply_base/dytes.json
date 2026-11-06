@@ -12,6 +12,8 @@
   "author": "funxdata",
   "type": "design_plugins",
   "plugins_type": "chat_reply",
+  "targets": ["common"],
+  "use_ai": false,
   "license": "MIT",
   "exports": {
     "./skills/reply_base.md": "reply_base.md",

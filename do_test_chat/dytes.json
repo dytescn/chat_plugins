@@ -11,6 +11,8 @@
   ],
   "author": "funxdata",
   "type": "design_plugins",
+  "plugins_type": "plugins",
+  "targets": ["common"],
   "use_ai": false,
   "mcp": "mcp.json",
   "license": "MIT",

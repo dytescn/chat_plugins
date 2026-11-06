@@ -51,7 +51,7 @@ jobs:
         run: cargo build --release --manifest-path deepseek/Cargo.toml
 
       - name: Publish deepseek with dytes
-        uses: dytescn/dytes@v0.1.15
+        uses: dytescn/dytes@v0.1.16
         with:
           command: publish
           dir: deepseek

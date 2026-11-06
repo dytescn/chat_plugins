@@ -1,0 +1,17 @@
+name: Release siliconflow_t2t
+
+on:
+  push:
+    tags:
+      - "siliconflow_t2t-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      package: siliconflow_t2t
+      kind: code
