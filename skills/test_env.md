@@ -4,7 +4,7 @@
 
 | 组件 | 要求 |
 | --- | --- |
-| 操作系统 | Windows 10/11 x64（当前 `siliconflow_t2t` 只发布 Windows 产物） |
+| 操作系统 | Windows 10/11 x64（与本地 Piksel / cyctron 一致） |
 | Rust | stable + MSVC 工具链 |
 | cyctron | 1.0.13 或与本地 Piksel 一致 |
 | Rust 测试 | `cargo test`，不依赖外部 API |
@@ -20,12 +20,12 @@
 
 ## 配置
 
-API Key 通过 `setup.ts` 写入 `info.db` 的 `setting` 表：
+API Key 通过 `cloud` 包的 `setup.json` 写入 `info.db` 的 `setting` 表：
 
 - DeepSeek：`deepseek_app_key`、`deepseek_app_base_url`、`deepseek_app_model` 等；
 - SiliconFlow：`silicon_app_key`、`silicon_app_base_url`、`silicon_app_model` 等。
 
-真实 Key 只保留在本地测试环境，不提交。清空测试库时重新执行 `setup.ts`。
+真实 Key 只保留在本地测试环境，不提交。清空测试库时重新执行 `setup.json`。
 
 ## 版本与位数
 

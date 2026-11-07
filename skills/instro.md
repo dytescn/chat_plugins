@@ -1,14 +1,12 @@
 # 仓库结构
 
-`chat_plugins` 是 Piksel 的 AI 对话供应商插件集合。每个子目录是一个 Rust `cdylib`，
-由 cyctron 加载，对外暴露 `post_chat`。
+`chat_plugins` 是 Piksel 的 AI 对话插件集合。每个子目录是一个 Rust `cdylib`，
+由 cyctron 加载，对外暴露 `post_chat`。供应商适配已迁移到 `dytescn/cloud`。
 
 ## 目录
 
 ```text
 chat_plugins/
-├── deepseek/              # DeepSeek Anthropic 兼容接口
-├── siliconflow_t2t/       # SiliconFlow 文本对话
 ├── think_base/            # think 阶段资源包（skills + prompts）
 ├── reply_base/            # reply 阶段资源包（skills + prompts）
 ├── do_test_chat/          # 确定性测试聊天插件
@@ -25,8 +23,6 @@ chat_plugins/
 
 | 名称 | 入口 | 端点 | 配置前缀 |
 | --- | --- | --- | --- |
-| `deepseek` | `post_chat` | `/libdeepseek` | `deepseek_app_*` |
-| `siliconflow_t2t` | `post_chat` | `/libsiliconflow_t2t` | `silicon_app_*` |
 | `do_test_chat` | `post_chat` | `/do_test_chat` | 无（测试插件） |
 | `think_base` | 无 | 无（资源包） | `chat_think` |
 | `reply_base` | 无 | 无（资源包） | `chat_reply` |
@@ -37,11 +33,11 @@ chat_plugins/
 chat_ui / 宿主
       │ 需要模型回复
       ▼
-POST /libdeepseek、/libsiliconflow_t2t 或 /do_test_chat
+POST /libcloud（供应商）或 /do_test_chat（测试插件）
       │
       ├─ 读取 info.db 的 setting
       ├─ 组装 messages
-      ├─ 调用供应商 API
+      ├─ 调用供应商 API（cloud 内部）
       └─ 返回 { code, data: { content, ... }, msg }
 ```
 
@@ -72,10 +68,9 @@ POST /libdeepseek、/libsiliconflow_t2t 或 /do_test_chat
 
 在 `chat_plugins` 中的用法：
 
-- `setup.ts` 通过 `POST /info_lib` 的 `info_post` / `info_update` 写入
+- `cloud` 包通过 `setup.json` 的 `info_post` / `info_update` 写入
   `deepseek_app_*`、`silicon_app_*` 配置；
-- 插件运行时用 `utils/db.rs` 调 `database.dll` 的 `post_db_query` 读 `info.db.setting`，
-  再用 `utils/setting.rs` 解析成配置结构；
+- `cloud` 运行时用 `database` 读 `info.db.setting` 并解析成供应商配置；
 - API Key 只存在于 `info.db`，不进入仓库、脚本或日志；
 - `info_lib` 不管对话消息存储，本仓库插件也不写 `dialogue.db` / `designdb`。
 
@@ -94,8 +89,8 @@ POST /libdeepseek、/libsiliconflow_t2t 或 /do_test_chat
 
 - 不负责设计软件的发现、启动与运行状态（由 `designsoft` 负责）；
 - 不提供向量表与语义检索（归 `chatllm`），只提供能力清单与向量化状态；
-- `chat_plugins` 的 `deepseek` / `siliconflow_t2t` 不依赖 `designplugin_lib`；
-  只有需要读取设计插件元数据或配置时才通过 `/plugin_lib` 访问。
+- 聊天插件不依赖 `designplugin_lib`；只有需要读取设计插件元数据或配置时才通过
+  `/plugin_lib` 访问。
 
 ## 单个插件的结构
 

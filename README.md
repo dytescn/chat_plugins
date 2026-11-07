@@ -1,18 +1,20 @@
 # chat_plugins
 
-Piksel 的 AI 对话供应商插件集合。除 `think_base/`、`reply_base/` 资源包外，
-每个子目录是一个 Rust `cdylib`，由 cyctron 加载，统一暴露 `post_chat`，
-只负责把对话请求转发给对应供应商并返回生成内容。
-`think_base/`、`reply_base/` 只包含 `skills/` 与 `prompts/`。
+Piksel 的 AI 对话插件集合。除 `think_base/`、`reply_base/` 资源包外，
+每个子目录是一个 Rust `cdylib`，由 cyctron 或 chatllm 加载，统一暴露 `post_chat`，
+只负责处理对话中的一段能力。
 
-本仓库不保存对话；对话索引与 user 消息由 `chatllm` 负责。
+`think_base/`、`reply_base` 只包含 `skills/` 与 `prompts/`。
+
+> 供应商适配（DeepSeek / SiliconFlow）已迁移到独立系统库
+> [`dytescn/cloud`](https://github.com/dytescn/cloud)，本仓库不再包含
+> `deepseek/`、`siliconflow_t2t/`。本仓库不保存对话；对话索引与 user 消息由
+> `chatllm` 负责。
 
 ## 插件
 
 | 目录 | 包名 | cyctron 端点 | 产物 | 配置前缀 |
 | --- | --- | --- | --- | --- |
-| `deepseek/` | `deepseek` | `/libdeepseek` | `libdeepseek.dll` / `.dylib` / `.so` | `deepseek_app_*` |
-| `siliconflow_t2t/` | `siliconflow_t2t` | `/libsiliconflow_t2t` | `libsiliconflow_t2t.dll` / `.dylib` / `.so` | `silicon_app_*` |
 | `do_test_chat/` | `do_test_chat` | `/do_test_chat` | `do_test_chat.dll` / `.dylib` / `.so` | 无（测试插件） |
 | `chat_code_check/` | `chat_code_check` | `/chat_code_check` | `chat_code_check.dll` / `.dylib` / `.so` | 无 |
 | `chat_ioc/` | `chat_ioc` | `/chat_ioc` | `chat_ioc.dll` / `.dylib` / `.so` | 无 |
@@ -20,11 +22,10 @@ Piksel 的 AI 对话供应商插件集合。除 `think_base/`、`reply_base/` �
 | `think_base/` | `think_base` | 无（资源包） | 仅 `skills/`、`prompts/` | 无 |
 | `reply_base/` | `reply_base` | 无（资源包） | 仅 `skills/`、`prompts/` | 无 |
 
-`deepseek`、`siliconflow_t2t` 是 `type: sys`，安装到 `libary/`；`do_test_chat`
-是 `type: design_plugins`，安装到 `plugins/do_test_chat/`；`think_base`、
-`reply_base` 是只包含 skills 与 prompts 的资源包。
+`do_test_chat` 是 `type: design_plugins`，安装到 `plugins/do_test_chat/`；
+`think_base`、`reply_base` 是只包含 skills 与 prompts 的资源包。
 
-## 与 chatllm 的关系
+## 与 chatllm / cloud 的关系
 
 ```text
 宿主 / chat_ui
@@ -32,13 +33,11 @@ Piksel 的 AI 对话供应商插件集合。除 `think_base/`、`reply_base/` �
       ▼
   chatllm ── 写 dialogue / messages
       │
-      └── 需要模型回复时，由调用方选择：
-              ├─ /libdeepseek
-              ├─ /libsiliconflow_t2t
-              └─ /do_test_chat（测试）
+      ├── 需要模型回复时 → libcloud（DeepSeek / SiliconFlow）
+      └── 业务插件 → /do_test_chat 等 chat_plugins 包
 ```
 
-`chatllm` 不再内置 siliconflow、skills 或向量能力；本仓库的插件独立提供模型生成。
+`chatllm` 不再内置 provider 调用；供应商选择与 HTTP 调用由 `cloud` 包统一负责。
 插件只返回内容，不写 `chatllm` 的数据库。
 
 ## 统一调用协议
@@ -74,25 +73,21 @@ FFI-Symbol: chat
 }
 ```
 
-- 成功码为 `0`；部分调用方也把 `200` 当作成功。
-- 输出缓冲区固定 64 KiB。
-- 统一规则：`messages` 非空时优先；为空时回落 `prompt`；两者都无有效内容返回 `400102`。
+- 成功码为 `0`；部分调用方也把 `200` 当作成功；
+- 输出缓冲区固定 64 KiB；
+- 统一规则：`messages` 非空时优先；为空时回落 `prompt`；两者都无有效内容返回 `400102`；
 - `system` 优先级：请求 `system` > setting 中的 `*_app_system_prompt`。
 
-统一协议详见：
-
-- [deepseek/docs/protocol.md](deepseek/docs/protocol.md)
-- [siliconflow_t2t/docs/protocol.md](siliconflow_t2t/docs/protocol.md)
+供应商请求 / 响应细节见
+[cloud/docs/ffi.md](https://github.com/dytescn/cloud/blob/main/docs/ffi.md)。
 
 ## 初始化配置
 
-两个包都通过 `setup.ts` 调用 `info_lib`，把供应商配置写入 `info.db` 的 `setting` 表。
-配置值中包含 API Key，仓库内只保留占位符，不提交真实密钥。
+插件自身如需配置，通过 `setup.json` 调用 `info_lib` 写入 `info.db` 的 `setting` 表。
+供应商配置（`deepseek_app_*` / `silicon_app_*`）由 `cloud` 包的 `setup.json` 初始化。
 
 ```bash
-# 由 dytes 执行 init 脚本
-dytes install sys deepseek
-dytes install sys siliconflow_t2t
+dytes install sys cloud
 ```
 
 ## 发布
@@ -101,8 +96,6 @@ dytes install sys siliconflow_t2t
 
 | 包 | workflow | 类型 |
 | --- | --- | --- |
-| `deepseek` | `deepseek-release.yml` | 代码（三平台） |
-| `siliconflow_t2t` | `siliconflow_t2t-release.yml` | 代码（三平台） |
 | `do_test_chat` | `do_test_chat-release.yml` | 代码（三平台） |
 | `chat_code_check` | `chat_code_check-release.yml` | 代码（三平台） |
 | `chat_ioc` | `chat_ioc-release.yml` | 代码（三平台） |
@@ -126,11 +119,7 @@ dytes install sys siliconflow_t2t
 ## 构建与测试
 
 ```bash
-cd deepseek
-cargo build --release
-cargo test
-
-cd ../siliconflow_t2t
+cd do_test_chat
 cargo build --release
 cargo test
 ```
@@ -141,8 +130,6 @@ cargo test
 
 ```text
 chat_plugins/
-├── deepseek/             # DeepSeek Anthropic 兼容聊天
-├── siliconflow_t2t/      # SiliconFlow 文本对话
 ├── do_test_chat/         # 确定性测试聊天插件
 ├── chat_code_check/      # 对话代码检查插件
 ├── chat_ioc/             # 对话 IOC 提取插件
@@ -159,8 +146,6 @@ chat_plugins/
 
 各插件文档：
 
-- [deepseek/README.md](deepseek/README.md)
-- [siliconflow_t2t/README.md](siliconflow_t2t/README.md)
 - [think_base/README.md](think_base/README.md)
 - [reply_base/README.md](reply_base/README.md)
 - [do_test_chat/README.md](do_test_chat/README.md)
