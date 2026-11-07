@@ -1,7 +1,7 @@
 # 仓库结构
 
 `chat_plugins` 是 Piksel 的 AI 对话插件集合。每个子目录是一个 Rust `cdylib`，
-由 cyctron 加载，对外暴露 `post_chat`。供应商适配已迁移到 `dytescn/cloud`。
+由 cyctron 加载，对外暴露 `post_chat`。供应商适配已迁移到 `dytescn/cloud_lib`。
 
 ## 目录
 
@@ -33,11 +33,11 @@ chat_plugins/
 chat_ui / 宿主
       │ 需要模型回复
       ▼
-POST /libcloud（供应商）或 /do_test_chat（测试插件）
+POST /cloud_lib（供应商）或 /do_test_chat（测试插件）
       │
       ├─ 读取 info.db 的 setting
       ├─ 组装 messages
-      ├─ 调用供应商 API（cloud 内部）
+      ├─ 调用供应商 API（cloud_lib 内部）
       └─ 返回 { code, data: { content, ... }, msg }
 ```
 
@@ -68,9 +68,9 @@ POST /libcloud（供应商）或 /do_test_chat（测试插件）
 
 在 `chat_plugins` 中的用法：
 
-- `cloud` 包通过 `setup.json` 的 `info_post` / `info_update` 写入
+- `cloud_lib` 包通过 `setup.json` 的 `info_post` / `info_update` 写入
   `deepseek_app_*`、`silicon_app_*` 配置；
-- `cloud` 运行时用 `database` 读 `info.db.setting` 并解析成供应商配置；
+- `cloud_lib` 运行时用 `database` 读 `info.db.setting` 并解析成供应商配置；
 - API Key 只存在于 `info.db`，不进入仓库、脚本或日志；
 - `info_lib` 不管对话消息存储，本仓库插件也不写 `dialogue.db` / `designdb`。
 

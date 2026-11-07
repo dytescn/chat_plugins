@@ -20,7 +20,7 @@
 
 ## 配置
 
-API Key 通过 `cloud` 包的 `setup.json` 写入 `info.db` 的 `setting` 表：
+API Key 通过 `cloud_lib` 包的 `setup.json` 写入 `info.db` 的 `setting` 表：
 
 - DeepSeek：`deepseek_app_key`、`deepseek_app_base_url`、`deepseek_app_model` 等；
 - SiliconFlow：`silicon_app_key`、`silicon_app_base_url`、`silicon_app_model` 等。

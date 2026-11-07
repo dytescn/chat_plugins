@@ -7,7 +7,7 @@ Piksel 的 AI 对话插件集合。除 `think_base/`、`reply_base/` 资源包�
 `think_base/`、`reply_base` 只包含 `skills/` 与 `prompts/`。
 
 > 供应商适配（DeepSeek / SiliconFlow）已迁移到独立系统库
-> [`dytescn/cloud`](https://github.com/dytescn/cloud)，本仓库不再包含
+> [`dytescn/cloud_lib`](https://github.com/dytescn/cloud_lib)，本仓库不再包含
 > `deepseek/`、`siliconflow_t2t/`。本仓库不保存对话；对话索引与 user 消息由
 > `chatllm` 负责。
 
@@ -25,7 +25,7 @@ Piksel 的 AI 对话插件集合。除 `think_base/`、`reply_base/` 资源包�
 `do_test_chat` 是 `type: design_plugins`，安装到 `plugins/do_test_chat/`；
 `think_base`、`reply_base` 是只包含 skills 与 prompts 的资源包。
 
-## 与 chatllm / cloud 的关系
+## 与 chatllm / cloud_lib 的关系
 
 ```text
 宿主 / chat_ui
@@ -33,11 +33,11 @@ Piksel 的 AI 对话插件集合。除 `think_base/`、`reply_base/` 资源包�
       ▼
   chatllm ── 写 dialogue / messages
       │
-      ├── 需要模型回复时 → libcloud（DeepSeek / SiliconFlow）
+      ├── 需要模型回复时 → cloud_lib（DeepSeek / SiliconFlow）
       └── 业务插件 → /do_test_chat 等 chat_plugins 包
 ```
 
-`chatllm` 不再内置 provider 调用；供应商选择与 HTTP 调用由 `cloud` 包统一负责。
+`chatllm` 不再内置 provider 调用；供应商选择与 HTTP 调用由 `cloud_lib` 包统一负责。
 插件只返回内容，不写 `chatllm` 的数据库。
 
 ## 统一调用协议
@@ -79,15 +79,15 @@ FFI-Symbol: chat
 - `system` 优先级：请求 `system` > setting 中的 `*_app_system_prompt`。
 
 供应商请求 / 响应细节见
-[cloud/docs/ffi.md](https://github.com/dytescn/cloud/blob/main/docs/ffi.md)。
+[cloud_lib/docs/ffi.md](https://github.com/dytescn/cloud_lib/blob/main/docs/ffi.md)。
 
 ## 初始化配置
 
 插件自身如需配置，通过 `setup.json` 调用 `info_lib` 写入 `info.db` 的 `setting` 表。
-供应商配置（`deepseek_app_*` / `silicon_app_*`）由 `cloud` 包的 `setup.json` 初始化。
+供应商配置（`deepseek_app_*` / `silicon_app_*`）由 `cloud_lib` 包的 `setup.json` 初始化。
 
 ```bash
-dytes install sys cloud
+dytes install sys cloud_lib
 ```
 
 ## 发布
