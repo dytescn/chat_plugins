@@ -1,0 +1,9 @@
+{
+  "dataset": "datasets/basic-dialogue-test",
+  "note": "reply 阶段输入是 plugins 结果；资源命中与插件调用是两层判定。",
+  "cases": [
+    { "input": "测试插件输出", "expected_keywords": ["插件", "插件结果"] },
+    { "input": "系统信息已生成", "expected_keywords": ["系统信息", "已生成"] },
+    { "input": "插件结果已保存", "expected_keywords": ["插件结果", "已保存"] }
+  ]
+}

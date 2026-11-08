@@ -64,3 +64,23 @@ plugins/think_base/
 ├── think_base.json
 └── dytes.json
 ```
+
+
+## 推荐测试输入
+
+与 `datasets/basic-dialogue-test` 对齐的推荐输入与期望关键词：
+
+| 输入 | 期望 think 关键词 |
+| --- | --- |
+| 你好 | 你好 |
+| 测试插件回显 | 插件 / 可用插件 |
+| 继续测试插件 | 插件 / 可用插件 |
+| 系统信息 | 系统信息 / 系统状态 |
+| 继续系统信息 | 系统信息 / 系统状态 |
+| 总结系统信息 | 系统信息 / 系统状态 |
+| 示例插件 | 示例 / 插件 |
+| 测试示例插件 | 示例 / 插件 |
+| 总结插件结果 | 插件 / 插件结果 |
+
+完整机器可读版本见 [`tests/recommended-inputs.json`](tests/recommended-inputs.json)。
+实际选中仍受 `chatllm` 的 `ai_match_min_score` 与 `kv_lib` 排序影响。

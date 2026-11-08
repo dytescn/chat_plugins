@@ -52,3 +52,19 @@ plugins/reply_base/
 ├── reply_base.json
 └── dytes.json
 ```
+
+
+## 推荐测试输入
+
+reply 阶段的输入是 plugins 结果，推荐用以下结果验证资源命中：
+
+| 输入 | 期望资源关键词 |
+| --- | --- |
+| 测试插件输出 | 插件 / 插件结果 |
+| 系统信息已生成 | 系统信息 / 已生成 |
+| 插件结果已保存 | 插件结果 / 已保存 |
+
+完整机器可读版本见 [`tests/recommended-inputs.json`](tests/recommended-inputs.json)。
+
+`chat_reply` 资源命中与插件调用是两层判定：资源命中但无可调用插件时，
+chatllm 会标记 `resource_hit` 并回退 reply_base 清洗。
