@@ -1,7 +1,7 @@
 {
   "name": "do_test_chat",
   "uuid": "4563e8e6-b965-472e-9a22-c1f8aace423c",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "deterministic chat plugin for end-to-end tests",
   "keywords": [
     "chat",
@@ -11,7 +11,7 @@
   ],
   "author": "funxdata",
   "type": "design_plugins",
-  "plugins_type": "plugins",
+  "plugins_type": "chat_plugins",
   "targets": ["common"],
   "use_ai": false,
   "mcp": "mcp.json",

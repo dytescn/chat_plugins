@@ -12,7 +12,7 @@
   ],
   "author": "dytescn",
   "type": "design_plugins",
-  "plugins_type": "plugins",
+  "plugins_type": "chat_plugins",
   "targets": ["common"],
   "use_ai": false,
   "mcp": "mcp.json",

@@ -7,7 +7,7 @@
 | --- | --- |
 | 包名 | `do_test_call` |
 | 版本 | `0.1.0` |
-| 类型 | `design_plugins`（`plugins_type: plugins`） |
+| 类型 | `design_plugins`（`plugins_type: chat_plugins`） |
 | 适用 | `targets: ["common"]` |
 | 导出符号 | `post_chat`（`FFI-Symbol: chat`） |
 | 底层依赖 | `./libary/info_lib.{dll,so,dylib}` |

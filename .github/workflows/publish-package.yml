@@ -67,9 +67,10 @@ jobs:
         run: cargo build --release --manifest-path "${{ inputs.package }}/Cargo.toml"
 
       - name: Publish with dytes
-        uses: dytescn/dytes@v0.1.16
+        uses: dytescn/dytes@v0.1.21
         with:
           command: publish
+          version: "0.1.21"
           dir: ${{ inputs.package }}
           args: ${{ inputs.args }}
 
@@ -82,8 +83,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Publish with dytes
-        uses: dytescn/dytes@v0.1.16
+        uses: dytescn/dytes@v0.1.21
         with:
           command: publish
+          version: "0.1.21"
           dir: ${{ inputs.package }}
           args: ${{ inputs.args }}
