@@ -1,0 +1,116 @@
+{
+  "name": "do_test_call",
+  "description": "测试 call_chat 插件：回调 manager_baseinfo 的 info_list，返回 info.db.setting 的信息条数；支持按 category / keyword 过滤。",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "plugins_uid": {
+        "type": "string",
+        "description": "call_chat 透传的对话 id。"
+      },
+      "category": {
+        "type": "string",
+        "description": "call_chat 透传的 kv 分类，仅用于回显。"
+      },
+      "prompts": {
+        "type": "string",
+        "description": "call_chat 透传的提示词 / 检索词，仅用于回显。"
+      },
+      "context": {
+        "type": "object",
+        "description": "可选过滤条件：category / keyword，对应 info_list 的过滤字段。"
+      },
+      "prompt": {
+        "type": "string",
+        "description": "兼容普通 chat 请求的输入；仅回显。"
+      },
+      "messages": {
+        "type": "array",
+        "description": "兼容普通 chat 请求的消息列表；仅回显最后一条非空消息。",
+        "items": {
+          "type": "object",
+          "properties": {
+            "role": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "role",
+            "content"
+          ]
+        }
+      }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "integer"
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "可读的统计结果。"
+          },
+          "count": {
+            "type": "integer",
+            "description": "info_list 返回的信息条数。"
+          },
+          "total": {
+            "type": "integer",
+            "description": "与 count 相同，便于通用读取。"
+          },
+          "tag": {
+            "type": "string",
+            "const": "do_test_call"
+          },
+          "endpoint": {
+            "type": "string",
+            "const": "info_lib"
+          },
+          "symbol": {
+            "type": "string",
+            "const": "info_list"
+          },
+          "input": {
+            "type": ["string", "null"],
+            "description": "回显的输入。"
+          },
+          "plugins_uid": {
+            "type": ["string", "null"]
+          },
+          "call_category": {
+            "type": ["string", "null"],
+            "description": "call_chat 透传的 kv 分类回显。"
+          },
+          "category": {
+            "type": ["string", "null"]
+          },
+          "keyword": {
+            "type": ["string", "null"]
+          },
+          "prompts": {
+            "type": ["string", "null"]
+          }
+        }
+      },
+      "msg": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "code",
+      "msg"
+    ]
+  },
+  "transport": {
+    "endpoint": "/do_test_call",
+    "ffiSymbol": "chat"
+  }
+}

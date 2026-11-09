@@ -16,6 +16,7 @@ Piksel 的 AI 对话插件集合。除 `think_base/`、`reply_base/` 资源包�
 | 目录 | 包名 | cyctron 端点 | 产物 | 配置前缀 |
 | --- | --- | --- | --- | --- |
 | `do_test_chat/` | `do_test_chat` | `/do_test_chat` | `do_test_chat.dll` / `.dylib` / `.so` | 无（测试插件） |
+| `do_test_call/` | `do_test_call` | `/do_test_call` | `do_test_call.dll` / `.dylib` / `.so` | 无（测试 call_chat） |
 | `chat_code_check/` | `chat_code_check` | `/chat_code_check` | `chat_code_check.dll` / `.dylib` / `.so` | 无 |
 | `chat_ioc/` | `chat_ioc` | `/chat_ioc` | `chat_ioc.dll` / `.dylib` / `.so` | 无 |
 | `chat_text_stats/` | `chat_text_stats` | `/chat_text_stats` | `chat_text_stats.dll` / `.dylib` / `.so` | 无 |
@@ -97,6 +98,7 @@ dytes install sys cloud_lib
 | 包 | workflow | 类型 |
 | --- | --- | --- |
 | `do_test_chat` | `do_test_chat-release.yml` | 代码（三平台） |
+| `do_test_call` | `do_test_call-release.yml` | 代码（三平台） |
 | `chat_code_check` | `chat_code_check-release.yml` | 代码（三平台） |
 | `chat_ioc` | `chat_ioc-release.yml` | 代码（三平台） |
 | `chat_text_stats` | `chat_text_stats-release.yml` | 代码（三平台） |
@@ -131,6 +133,7 @@ cargo test
 ```text
 chat_plugins/
 ├── do_test_chat/         # 确定性测试聊天插件
+├── do_test_call/         # call_chat 测试插件（回调 info_lib.info_list）
 ├── chat_code_check/      # 对话代码检查插件
 ├── chat_ioc/             # 对话 IOC 提取插件
 ├── chat_text_stats/      # 对话文本统计插件
