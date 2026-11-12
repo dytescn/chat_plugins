@@ -1,0 +1,92 @@
+{
+  "prompts": [
+    {
+      "id": "reply_base_answer",
+      "name": "回复结果",
+      "content": "回复|回答|结果",
+      "category": "reply",
+      "sort": 10,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_summary",
+      "name": "总结归纳",
+      "content": "总结|归纳",
+      "category": "reply",
+      "sort": 20,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_explain",
+      "name": "解释说明",
+      "content": "解释|说明",
+      "category": "reply",
+      "sort": 30,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_done",
+      "name": "完成状态",
+      "content": "已生成|已查询|已找到",
+      "category": "reply",
+      "sort": 40,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_error",
+      "name": "错误处理",
+      "content": "失败|错误|异常|超时",
+      "category": "reply",
+      "sort": 50,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_missing",
+      "name": "缺失处理",
+      "content": "未找到|未配置|无法执行",
+      "category": "reply",
+      "sort": 60,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_plugin_result",
+      "name": "插件结果",
+      "content": "插件结果|执行结果|查询结果",
+      "category": "reply",
+      "sort": 70,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_system_info",
+      "name": "系统信息",
+      "content": "系统信息|环境信息|版本信息",
+      "category": "reply",
+      "sort": 80,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_next",
+      "name": "后续建议",
+      "content": "建议|下一步|步骤",
+      "category": "reply",
+      "sort": 90,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_check",
+      "name": "配置检查",
+      "content": "检查配置|缺少参数|权限不足|网络错误",
+      "category": "reply",
+      "sort": 100,
+      "is_enabled": 1
+    },
+    {
+      "id": "reply_base_output",
+      "name": "输出要求",
+      "content": "简洁|准确|可分步骤|面向用户",
+      "category": "reply",
+      "sort": 110,
+      "is_enabled": 1
+    }
+  ]
+}

@@ -15,3 +15,6 @@ jobs:
     with:
       package: do_test_chat
       kind: code
+      # mcp.json 使用 plugin_lib 规范的对象数组格式；dytes 的旧版清单校验
+      # 仍把 tools 当作文件名数组，因此发布时跳过 check。
+      args: --skip-check

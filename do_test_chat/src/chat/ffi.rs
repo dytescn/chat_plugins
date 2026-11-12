@@ -46,18 +46,23 @@ fn respond_error(json_out: *mut c_char, code: i32, msg: &str) -> c_int {
     write_json_out(json_out, json!({ "code": code, "data": {}, "msg": msg }))
 }
 
-/// prompt 优先；否则取最后一条有内容的 user 消息；再退到最后一条有内容的消息。
+/// messages 非空时优先：取最后一条有内容的 user 消息，其次最后一条有内容的消息；
+/// messages 为空或没有有效内容时回落 prompt。
 fn pick_input(req: &ChatReq) -> Option<String> {
-    if let Some(prompt) = req.prompt.as_ref().filter(|p| !p.trim().is_empty()) {
-        return Some(prompt.clone());
+    if let Some(messages) = req.messages.as_ref().filter(|items| !items.is_empty()) {
+        let picked = messages
+            .iter()
+            .rev()
+            .find(|m| m.role.trim().eq_ignore_ascii_case("user") && !m.content.trim().is_empty())
+            .or_else(|| messages.iter().rev().find(|m| !m.content.trim().is_empty()));
+        if let Some(message) = picked {
+            return Some(message.content.clone());
+        }
     }
-    let messages = req.messages.as_ref()?;
-    messages
-        .iter()
-        .rev()
-        .find(|m| m.role == "user" && !m.content.trim().is_empty())
-        .or_else(|| messages.iter().rev().find(|m| !m.content.trim().is_empty()))
-        .map(|m| m.content.clone())
+    req.prompt
+        .as_ref()
+        .filter(|prompt| !prompt.trim().is_empty())
+        .cloned()
 }
 
 #[unsafe(no_mangle)]

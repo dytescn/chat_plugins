@@ -42,6 +42,20 @@ fn uses_last_user_message() {
 }
 
 #[test]
+fn messages_take_priority_over_prompt() {
+    let value = call(r#"{"prompt":"单轮","messages":[{"role":"USER","content":"多轮"}]}"#);
+    assert_eq!(value["code"], 0);
+    assert_eq!(value["data"]["input"], "多轮");
+}
+
+#[test]
+fn falls_back_to_prompt_when_messages_have_no_content() {
+    let value = call(r#"{"prompt":"单轮","messages":[{"role":"user","content":"  "}]}"#);
+    assert_eq!(value["code"], 0);
+    assert_eq!(value["data"]["input"], "单轮");
+}
+
+#[test]
 fn empty_input_is_rejected() {
     let value = call(r#"{"prompt":""}"#);
     assert_eq!(value["code"], 400102);

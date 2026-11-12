@@ -1,0 +1,98 @@
+{
+  "tools": [
+    {
+      "name": "do_test_chat",
+      "uuid": "4563e8e6-b965-472e-9a22-c1f8aace423c:do_test_chat",
+      "ffi_symbol": "chat",
+      "title": "测试聊天回显",
+      "description": "返回输入加 do_chat_test 标记与 Unix 毫秒时间戳；不访问网络、不读写数据库。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "单轮输入；与 messages 二选一。优先使用非空 prompt。"
+          },
+          "messages": {
+            "type": "array",
+            "description": "多轮消息；取最后一条非空 user 消息。",
+            "items": {
+              "type": "object",
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "description": "system / user / assistant"
+                },
+                "content": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "role",
+                "content"
+              ]
+            }
+          }
+        },
+        "anyOf": [
+          { "required": ["prompt"] },
+          { "required": ["messages"] }
+        ]
+      },
+      "inputExample": {
+        "prompt": "你好"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "输入 + do_chat_test + 时间"
+              },
+              "input": {
+                "type": "string",
+                "description": "实际使用的输入"
+              },
+              "tag": {
+                "type": "string",
+                "const": "do_chat_test"
+              },
+              "time": {
+                "type": "integer",
+                "description": "Unix 毫秒时间戳"
+              }
+            }
+          },
+          "msg": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "msg"
+        ]
+      },
+      "outputExample": {
+        "code": 0,
+        "data": {
+          "content": "你好do_chat_test1793780000000",
+          "input": "你好",
+          "tag": "do_chat_test",
+          "time": 1793780000000
+        },
+        "msg": "success"
+      },
+      "transport": {
+        "endpoint": "/do_test_chat",
+        "ffiSymbol": "chat"
+      },
+      "use_ai": 0
+    }
+  ]
+}

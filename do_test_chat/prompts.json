@@ -1,0 +1,60 @@
+{
+  "prompts": [
+    {
+      "id": "do_test_chat_echo",
+      "name": "回显测试",
+      "content": "回显|测试",
+      "category": "test",
+      "sort": 10,
+      "is_enabled": 1
+    },
+    {
+      "id": "do_test_chat_message",
+      "name": "多轮消息",
+      "content": "消息|多轮",
+      "category": "test",
+      "sort": 20,
+      "is_enabled": 1
+    },
+    {
+      "id": "do_test_chat_plugin",
+      "name": "测试插件",
+      "content": "测试插件|插件",
+      "category": "test",
+      "sort": 30,
+      "is_enabled": 1
+    },
+    {
+      "id": "do_test_chat_system",
+      "name": "系统信息",
+      "content": "系统信息",
+      "category": "test",
+      "sort": 40,
+      "is_enabled": 1
+    },
+    {
+      "id": "do_test_chat_time",
+      "name": "时间戳",
+      "content": "时间|时间戳",
+      "category": "test",
+      "sort": 50,
+      "is_enabled": 1
+    },
+    {
+      "id": "do_test_chat_help",
+      "name": "帮助",
+      "content": "帮助|继续",
+      "category": "test",
+      "sort": 60,
+      "is_enabled": 1
+    },
+    {
+      "id": "do_test_chat_english",
+      "name": "英文测试",
+      "content": "hello|test|echo",
+      "category": "test",
+      "sort": 70,
+      "is_enabled": 1
+    }
+  ]
+}

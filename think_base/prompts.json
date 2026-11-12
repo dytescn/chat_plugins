@@ -1,0 +1,92 @@
+{
+  "prompts": [
+    {
+      "id": "think_base_greeting",
+      "name": "问候",
+      "content": "你好|问候",
+      "category": "think",
+      "sort": 10,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_intro",
+      "name": "自我介绍",
+      "content": "自我介绍|你能做什么",
+      "category": "think",
+      "sort": 20,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_system",
+      "name": "系统信息",
+      "content": "系统信息|运行环境",
+      "category": "think",
+      "sort": 30,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_config",
+      "name": "版本与配置",
+      "content": "版本|配置|部署",
+      "category": "think",
+      "sort": 40,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_resource",
+      "name": "资源状态",
+      "content": "性能|资源占用",
+      "category": "think",
+      "sort": 50,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_plugin",
+      "name": "插件能力",
+      "content": "插件|可用插件",
+      "category": "think",
+      "sort": 60,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_result",
+      "name": "插件结果",
+      "content": "插件结果|执行结果",
+      "category": "think",
+      "sort": 70,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_example",
+      "name": "示例教程",
+      "content": "示例|教程",
+      "category": "think",
+      "sort": 80,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_summary",
+      "name": "总结分析",
+      "content": "总结|分析",
+      "category": "think",
+      "sort": 90,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_help",
+      "name": "使用建议",
+      "content": "怎么办|如何处理|建议",
+      "category": "think",
+      "sort": 100,
+      "is_enabled": 1
+    },
+    {
+      "id": "think_base_chat",
+      "name": "闲聊",
+      "content": "闲聊|随便聊聊",
+      "category": "think",
+      "sort": 110,
+      "is_enabled": 1
+    }
+  ]
+}

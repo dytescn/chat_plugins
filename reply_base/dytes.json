@@ -1,8 +1,8 @@
 {
   "name": "reply_base",
   "uuid": "6f2b8d41-9c3a-4e7b-8d5f-1a2c3e4b5d60",
-  "version": "0.1.2",
-  "description": "reply stage resource package: skills and prompts",
+  "version": "0.2.0",
+  "description": "reply 阶段的检索提示词与技能资源包",
   "keywords": [
     "chat",
     "reply",
@@ -12,11 +12,31 @@
   "author": "funxdata",
   "type": "design_plugins",
   "plugins_type": "chat_reply",
-  "targets": ["common"],
+  "target": "common",
+  "targets": [
+    "common"
+  ],
   "use_ai": false,
   "license": "MIT",
   "exports": {
     "./skills/reply_base.md": "reply_base.md",
-    "./prompts/reply_base.json": "reply_base.json"
+    "./prompts.json": "prompts.json"
+  },
+  "platform-exports": {
+    "windows": {
+      "./skills/reply_base.md": "reply_base.md",
+      "./prompts.json": "prompts.json",
+      "./stubs/reply_base.dll": "reply_base.dll"
+    },
+    "linux": {
+      "./skills/reply_base.md": "reply_base.md",
+      "./prompts.json": "prompts.json",
+      "./stubs/libreply_base.so": "libreply_base.so"
+    },
+    "macos": {
+      "./skills/reply_base.md": "reply_base.md",
+      "./prompts.json": "prompts.json",
+      "./stubs/libreply_base.dylib": "libreply_base.dylib"
+    }
   }
 }

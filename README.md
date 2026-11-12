@@ -4,7 +4,7 @@ Piksel 的 AI 对话插件集合。除 `think_base/`、`reply_base/` 资源包�
 每个子目录是一个 Rust `cdylib`，由 cyctron 或 chatllm 加载，统一暴露 `post_chat`，
 只负责处理对话中的一段能力。
 
-`think_base/`、`reply_base` 只包含 `skills/` 与 `prompts/`。
+`think_base/`、`reply_base` 只包含 `skills/`、`prompts.json` 与清单。
 
 > 供应商适配（DeepSeek / SiliconFlow）已迁移到独立系统库
 > [`dytescn/cloud_lib`](https://github.com/dytescn/cloud_lib)，本仓库不再包含
@@ -15,16 +15,16 @@ Piksel 的 AI 对话插件集合。除 `think_base/`、`reply_base/` 资源包�
 
 | 目录 | 包名 | cyctron 端点 | 产物 | 配置前缀 |
 | --- | --- | --- | --- | --- |
-| `do_test_chat/` | `do_test_chat` | `/do_test_chat` | `do_test_chat.dll` / `.dylib` / `.so` | 无（测试插件） |
-| `do_test_call/` | `do_test_call` | `/do_test_call` | `do_test_call.dll` / `.dylib` / `.so` | 无（测试 call_chat） |
+| `do_test_chat/` | `do_test_chat` | `/do_test_chat` | `do_test_chat.dll` / `.so` / `.dylib` | 无（测试插件） |
 | `chat_code_check/` | `chat_code_check` | `/chat_code_check` | `chat_code_check.dll` / `.dylib` / `.so` | 无 |
 | `chat_ioc/` | `chat_ioc` | `/chat_ioc` | `chat_ioc.dll` / `.dylib` / `.so` | 无 |
 | `chat_text_stats/` | `chat_text_stats` | `/chat_text_stats` | `chat_text_stats.dll` / `.dylib` / `.so` | 无 |
-| `think_base/` | `think_base` | 无（资源包） | 仅 `skills/`、`prompts/` | 无 |
-| `reply_base/` | `reply_base` | 无（资源包） | 仅 `skills/`、`prompts/` | 无 |
+| `think_base/` | `think_base` | 无（资源包） | 仅 `skills/`、`prompts.json` | 无 |
+| `reply_base/` | `reply_base` | 无（资源包） | 仅 `skills/`、`prompts.json` | 无 |
 
 `do_test_chat` 是 `type: design_plugins`，安装到 `plugins/do_test_chat/`；
-`think_base`、`reply_base` 是只包含 skills 与 prompts 的资源包。
+`think_base`、`reply_base` 是只包含 skills 与 prompts.json 的资源包，
+提示词按 `plugin_lib` 规范放在包根 `prompts.json`。
 
 ## 与 chatllm / cloud_lib 的关系
 
@@ -98,7 +98,6 @@ dytes install sys cloud_lib
 | 包 | workflow | 类型 |
 | --- | --- | --- |
 | `do_test_chat` | `do_test_chat-release.yml` | 代码（三平台） |
-| `do_test_call` | `do_test_call-release.yml` | 代码（三平台） |
 | `chat_code_check` | `chat_code_check-release.yml` | 代码（三平台） |
 | `chat_ioc` | `chat_ioc-release.yml` | 代码（三平台） |
 | `chat_text_stats` | `chat_text_stats-release.yml` | 代码（三平台） |
@@ -109,7 +108,7 @@ dytes install sys cloud_lib
 
 1. 更新对应目录 `dytes.json` 的 `version`；
 2. 提交并推送；
-3. 推送 tag：`<包名>-v<版本>`，例如 `do_test_chat-v0.1.4`；
+3. 推送 tag：`<包名>-v<版本>`，例如 `do_test_chat-v0.2.0`；
 4. workflow 校验 tag 与清单版本一致后，调用
    [publish-package.yml](.github/workflows/publish-package.yml)：
    - 代码包在 Windows / Linux / macOS 三平台分别 `cargo build --release`
@@ -133,12 +132,11 @@ cargo test
 ```text
 chat_plugins/
 ├── do_test_chat/         # 确定性测试聊天插件
-├── do_test_call/         # call_chat 测试插件（回调 info_lib.info_list）
 ├── chat_code_check/      # 对话代码检查插件
 ├── chat_ioc/             # 对话 IOC 提取插件
 ├── chat_text_stats/      # 对话文本统计插件
-├── think_base/           # think 阶段资源包（skills + prompts）
-├── reply_base/           # reply 阶段资源包（skills + prompts）
+├── think_base/           # think 阶段资源包（skills + prompts.json）
+├── reply_base/           # reply 阶段资源包（skills + prompts.json）
 ├── plugintest/           # 本地 cyctron 插件测试环境（运行产物不入库）
 ├── todo/                 # 待办与验证记录
 ├── skills/               # 开发、测试、联调、发布规范

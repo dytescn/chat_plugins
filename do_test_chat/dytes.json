@@ -1,8 +1,8 @@
 {
   "name": "do_test_chat",
   "uuid": "4563e8e6-b965-472e-9a22-c1f8aace423c",
-  "version": "0.1.5",
-  "description": "deterministic chat plugin for end-to-end tests",
+  "version": "0.2.0",
+  "description": "确定性测试聊天插件：回显输入并附加测试标记与时间戳",
   "keywords": [
     "chat",
     "test",
@@ -12,28 +12,35 @@
   "author": "funxdata",
   "type": "design_plugins",
   "plugins_type": "chat_plugins",
+  "target": "common",
   "targets": ["common"],
   "use_ai": false,
   "mcp": "mcp.json",
   "license": "MIT",
+  "exports": {
+    "./target/release/do_test_chat.dll": "do_test_chat.dll",
+    "./prompts.json": "prompts.json",
+    "./taskflow.json": "taskflow.json",
+    "./mcp.json": "mcp.json"
+  },
   "platform-exports": {
     "windows": {
       "./target/release/do_test_chat.dll": "do_test_chat.dll",
-      "./prompts/do_test_chat.json": "prompts.json",
-      "./mcp/mcp.json": "mcp.json",
-      "./mcp/chat.json": "chat.json"
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
     },
     "linux": {
       "./target/release/libdo_test_chat.so": "do_test_chat.so",
-      "./prompts/do_test_chat.json": "prompts.json",
-      "./mcp/mcp.json": "mcp.json",
-      "./mcp/chat.json": "chat.json"
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
     },
     "macos": {
       "./target/release/libdo_test_chat.dylib": "do_test_chat.dylib",
-      "./prompts/do_test_chat.json": "prompts.json",
-      "./mcp/mcp.json": "mcp.json",
-      "./mcp/chat.json": "chat.json"
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
     }
   }
 }
