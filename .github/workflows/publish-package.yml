@@ -75,15 +75,10 @@ jobs:
           args: ${{ inputs.args }}
 
   publish-resource:
-    name: Publish ${{ inputs.package }} ${{ matrix.platform }}
+    name: Publish ${{ inputs.package }}
     if: ${{ inputs.kind == 'resource' }}
     needs: prepare
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        platform: [windows, linux, macos]
-    runs-on: ${{ matrix.platform == 'windows' && 'windows-latest' || matrix.platform == 'macos' && 'macos-latest' || 'ubuntu-latest' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 

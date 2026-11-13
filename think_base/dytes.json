@@ -1,7 +1,7 @@
 {
   "name": "think_base",
   "uuid": "9a7f3c2e-5b1d-4e8a-9c6f-2d4b8a1e7c30",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "think 阶段的检索提示词与技能资源包",
   "keywords": [
     "chat",
@@ -25,18 +25,15 @@
   "platform-exports": {
     "windows": {
       "./skills/think_base.md": "think_base.md",
-      "./prompts.json": "prompts.json",
-      "./stubs/think_base.dll": "think_base.dll"
+      "./prompts.json": "prompts.json"
     },
     "linux": {
       "./skills/think_base.md": "think_base.md",
-      "./prompts.json": "prompts.json",
-      "./stubs/libthink_base.so": "libthink_base.so"
+      "./prompts.json": "prompts.json"
     },
     "macos": {
       "./skills/think_base.md": "think_base.md",
-      "./prompts.json": "prompts.json",
-      "./stubs/libthink_base.dylib": "libthink_base.dylib"
+      "./prompts.json": "prompts.json"
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "reply_base",
   "uuid": "6f2b8d41-9c3a-4e7b-8d5f-1a2c3e4b5d60",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "reply 阶段的检索提示词与技能资源包",
   "keywords": [
     "chat",
@@ -25,18 +25,15 @@
   "platform-exports": {
     "windows": {
       "./skills/reply_base.md": "reply_base.md",
-      "./prompts.json": "prompts.json",
-      "./stubs/reply_base.dll": "reply_base.dll"
+      "./prompts.json": "prompts.json"
     },
     "linux": {
       "./skills/reply_base.md": "reply_base.md",
-      "./prompts.json": "prompts.json",
-      "./stubs/libreply_base.so": "libreply_base.so"
+      "./prompts.json": "prompts.json"
     },
     "macos": {
       "./skills/reply_base.md": "reply_base.md",
-      "./prompts.json": "prompts.json",
-      "./stubs/libreply_base.dylib": "libreply_base.dylib"
+      "./prompts.json": "prompts.json"
     }
   }
 }

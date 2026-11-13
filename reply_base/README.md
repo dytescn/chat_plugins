@@ -11,11 +11,7 @@ reply_base/
 ├── README.md
 ├── skills/
 │   └── reply_base.md
-├── prompts.json
-└── stubs/
-    ├── reply_base.dll
-    ├── libreply_base.so
-    └── libreply_base.dylib
+└── prompts.json
 ```
 
 `skills/` 与 `prompts.json` 均直接位于包根，符合 `plugin_lib` 的
@@ -106,10 +102,9 @@ plugins/reply_base/
 > `chatllm` 的 `reply_base::prompts()` 目前仍尝试读取安装目录下的 `reply_base.json`；
 > 该读取只用于日志，失败不影响清洗流程。后续需同步改为 `prompts.json`。
 
-> `plugin_lib` 的 `install_plugin` 当前严格要求当前平台库文件。本包是纯资源包，
-> 在 `stubs/` 提供三平台占位库（1 字节），只用于通过安装校验，不会被调用；
-> 发布时按平台导出为 `reply_base.dll` / `libreply_base.so` / `libreply_base.dylib`。
-> 资源包发布 workflow 因此需要三平台分别执行 `dytes publish`。
+> 本包是纯资源包，不包含动态库。`plugin_lib` 当前的安装流程仍要求当前平台库文件，
+> 直接安装会返回 `500300`；需要上游对 `chat_think` / `chat_reply` 资源包放宽
+> 库文件校验，或由调用方只复制导出文件后登记数据。
 
 ## 推荐测试输入
 
