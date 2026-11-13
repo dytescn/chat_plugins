@@ -108,7 +108,7 @@ dytes install sys cloud_lib
 
 1. 更新对应目录 `dytes.json` 的 `version`；
 2. 提交并推送；
-3. 推送 tag：`<包名>-v<版本>`，例如 `do_test_chat-v0.2.0`；
+3. 推送 tag：`<包名>-v<版本>`，例如 `do_test_chat-v0.2.1`；
 4. workflow 校验 tag 与清单版本一致后，调用
    [publish-package.yml](.github/workflows/publish-package.yml)：
    - 代码包在 Windows / Linux / macOS 三平台分别 `cargo build --release`

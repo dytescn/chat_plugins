@@ -1,7 +1,7 @@
 {
   "name": "do_test_chat",
   "uuid": "4563e8e6-b965-472e-9a22-c1f8aace423c",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "确定性测试聊天插件：回显输入并附加测试标记与时间戳",
   "keywords": [
     "chat",
@@ -13,7 +13,9 @@
   "type": "design_plugins",
   "plugins_type": "chat_plugins",
   "target": "common",
-  "targets": ["common"],
+  "targets": [
+    "common"
+  ],
   "use_ai": false,
   "mcp": "mcp.json",
   "license": "MIT",
