@@ -1,7 +1,7 @@
 {
   "name": "think_base",
   "uuid": "9a7f3c2e-5b1d-4e8a-9c6f-2d4b8a1e7c30",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "think 阶段的检索提示词与技能资源包",
   "keywords": [
     "chat",

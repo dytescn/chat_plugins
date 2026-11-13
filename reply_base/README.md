@@ -107,7 +107,7 @@ plugins/reply_base/
 > 该读取只用于日志，失败不影响清洗流程。后续需同步改为 `prompts.json`。
 
 > `plugin_lib` 的 `install_plugin` 当前严格要求当前平台库文件。本包是纯资源包，
-> 在 `stubs/` 提供三平台占位库（0 字节），只用于通过安装校验，不会被调用；
+> 在 `stubs/` 提供三平台占位库（1 字节），只用于通过安装校验，不会被调用；
 > 发布时按平台导出为 `reply_base.dll` / `libreply_base.so` / `libreply_base.dylib`。
 > 资源包发布 workflow 因此需要三平台分别执行 `dytes publish`。
 

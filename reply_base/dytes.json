@@ -1,7 +1,7 @@
 {
   "name": "reply_base",
   "uuid": "6f2b8d41-9c3a-4e7b-8d5f-1a2c3e4b5d60",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "reply 阶段的检索提示词与技能资源包",
   "keywords": [
     "chat",
