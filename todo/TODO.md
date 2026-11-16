@@ -16,6 +16,9 @@
 - [x] 发布 `think_base_call` 0.1.4：`prompts.json` 增加 `base` 关键词，三平台 CI 发布成功
 - [x] 新增并发布 `chat_plugins_base` 0.1.0：插件阶段基础能力，
   `taskflow.json` 回调 `post_chat`，三平台 CI 发布成功
+- [x] 新增并发布 `reply_base_call` 0.1.1：reply 阶段基础能力，
+  `prompts.json` 含 `base`，本地 FFI 与 `dytes test` 通过；windows / linux 发布成功，
+  macos 任务两次被 GitHub Actions 取消（0.1.0 / 0.1.1），待重跑
 - [ ] 确认 `think_base_call` 技能安装方案（dytes 拍平 `skills/`，`plugin_lib` 未登记技能）
 
 ## 待办
