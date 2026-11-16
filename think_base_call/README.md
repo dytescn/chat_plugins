@@ -43,7 +43,9 @@ think_base_call/
 - `chat_think` 包必须带 `skills/*.md`（`designplugin_lib` 发布规范）；
 - `prompts.json` 每个元素含 `id` / `name` / `content`，`content` ≤ 150 字节；
 - `mcp.json` 的 `tools[].inputSchema` 只有 `input` 一个字符串字段，
-  `outputSchema` 含 `prompts`（关键字）与 `outputs`（内容）。
+  `outputSchema` 含 `prompts`（关键字）与 `outputs`（内容）；
+- `taskflow.json` 使用 `plugin_uuid` / `plugin_name` / `desc` / `ffi_symbol` 四个字段；
+  `ffi_symbol = chat` 对应动态库导出 `post_chat`（调用方按 `post_<ffi_symbol>` 解析）。
 
 > dytes 旧版清单校验仍把 `mcp.json` 的 `tools` 当作文件名数组，发布 workflow
 > 需要传入 `--skip-check`（与 `do_test_chat` 相同）。

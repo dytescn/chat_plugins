@@ -1,8 +1,8 @@
 [
   {
-    "uid": "c3b8f1d4-6e2a-4f7b-8d91-5a0c7e3b2f46:think_base_call",
-    "name": "think 阶段基础调用",
-    "desc": "调用 think_base_call 的 chat 能力，接收 prompt 或 messages 并返回调用结果。",
-    "callback": "chat"
+    "plugin_uuid": "c3b8f1d4-6e2a-4f7b-8d91-5a0c7e3b2f46",
+    "plugin_name": "think_base_call",
+    "desc": "接收单个字符串输入，返回关键字与内容",
+    "ffi_symbol": "chat"
   }
 ]
