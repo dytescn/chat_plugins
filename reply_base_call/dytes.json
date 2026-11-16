@@ -1,7 +1,7 @@
 {
   "name": "reply_base_call",
   "uuid": "2b7e9c41-5d83-4a6f-b0e4-7c19d2f8a365",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "回复阶段（chat_reply）的基础能力",
   "keywords": [
     "chat",
