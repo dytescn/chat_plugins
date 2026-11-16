@@ -8,6 +8,9 @@
 - [x] 整理根 README 与插件 README
 - [x] 发布 `think_base_call` 0.1.0：三平台 CI 发布成功；本地 FFI 冒烟通过
   （`input`/`prompt` 返回 `prompts=["问候"]`、`outputs=["测试"+输入]`，空输入返回 `400102`）
+- [x] 发布 `think_base_call` 0.1.1：`taskflow.json` 改为规范四字段（`ffi_symbol = chat`），
+  三平台 CI 发布成功；`plugins_lib` 文档与 issue 已同步
+- [ ] 确认 `think_base_call` 技能安装方案（dytes 拍平 `skills/`，`plugin_lib` 未登记技能）
 
 ## 待办
 
