@@ -33,7 +33,7 @@ think_base_call/
 ├── Cargo.toml
 ├── dytes.json
 ├── mcp.json              # plugin_lib 规范；只声明 input 一个字符串入参
-├── prompts.json          # 一条提示词：问候
+├── prompts.json          # think 提示词：问候、base
 ├── taskflow.json
 ├── skills/
 │   └── think_base_call.md
