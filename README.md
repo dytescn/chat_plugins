@@ -117,8 +117,8 @@ dytes install sys cloud_lib
      并执行 `dytes publish`；
    - 资源包只在 Ubuntu 上执行 `dytes publish`。
 
-`plugintest/` 保存本地依赖与测试数据（`type: app`），不是可分发包，不创建发布 workflow；
-FFI 接口直接用 `scripts/ffi_call.py` 加载动态库测试，不经过 cyctron。
+接口测试用 `dytes test` 搭建依赖环境，再用 Deno（`ts/ffi_test.ts`）直接加载动态库，
+不再经过 cyctron。
 
 ## 构建与测试
 
@@ -128,7 +128,7 @@ cargo build --release
 cargo test
 ```
 
-本地单元测试不访问外部 API；接口测试用 `scripts/ffi_call.py` 直接加载动态库；
+本地单元测试不访问外部 API；接口测试用 `dytes test` + `deno task ffi`；
 真实对话需要 `database.dll` / `info.db` 配置和可用的供应商 Key。
 
 ## 目录
@@ -142,8 +142,8 @@ chat_plugins/
 ├── think_base_call/      # think 阶段基础调用插件（骨架）
 ├── think_base/           # think 阶段资源包（skills + prompts.json）
 ├── reply_base/           # reply 阶段资源包（skills + prompts.json）
-├── plugintest/           # 本地依赖与测试数据（运行产物不入库）
-├── scripts/              # 本地脚本（FFI 直连测试）
+├── ts/                   # Deno FFI 测试脚本
+├── deno.json             # Deno 任务配置
 ├── todo/                 # 待办与验证记录
 ├── skills/               # 开发、测试、联调、发布规范
 ├── README.md
@@ -163,4 +163,3 @@ chat_plugins/
 - [skills/README.md](skills/README.md)
 - [runflow/chat_run.md](runflow/chat_run.md)
 - [todo/TODO.md](todo/TODO.md)
-- [plugintest/README.md](plugintest/README.md)

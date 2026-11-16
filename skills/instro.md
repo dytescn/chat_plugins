@@ -1,7 +1,7 @@
 # 仓库结构
 
 `chat_plugins` 是 Piksel 的 AI 对话插件集合。每个子目录是一个 Rust `cdylib`，
-由 cyctron 加载，对外暴露 `post_chat`。供应商适配已迁移到 `dytescn/cloud_lib`。
+由 chatllm 或宿主加载，对外暴露 `post_chat`。供应商适配已迁移到 `dytescn/cloud_lib`。
 
 ## 目录
 
@@ -11,7 +11,8 @@ chat_plugins/
 ├── reply_base/            # reply 阶段资源包（skills + prompts）
 ├── do_test_chat/          # 确定性测试聊天插件
 ├── runflow/               # 运行流程文档
-├── plugintest/            # 本地插件测试环境（运行产物不入库）
+├── ts/                    # Deno FFI 测试脚本
+├── deno.json              # Deno 任务配置
 ├── todo/                  # 待办与验证记录
 ├── skills/                # 开发规范（本目录）
 ├── README.md
@@ -53,7 +54,7 @@ POST /cloud_lib（供应商）或 /do_test_chat（测试插件）
 
 ## 依赖的系统库
 
-聊天插件自己不建表、不直接链接 SQLite；数据库能力来自 cyctron 加载的 sys 库。
+聊天插件自己不建表、不直接链接 SQLite；数据库能力来自宿主加载的 sys 库。
 本仓库只依赖 `info_lib`，了解 `designplugin_lib` 是为了划清边界。
 
 ### info_lib
