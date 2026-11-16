@@ -1,0 +1,59 @@
+{
+  "tools": [
+    {
+      "name": "chat_plugins_base",
+      "uuid": "8f4d2a70-3c61-4b95-a8e2-6d1f0b7c9e53:chat_plugins_base",
+      "ffi_symbol": "post_chat",
+      "title": "插件阶段基础调用",
+      "description": "接收一个字符串输入，返回带插件标记的内容；不访问文件、网络或数据库。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "插件阶段的输入"
+          }
+        },
+        "required": ["input"]
+      },
+      "inputExample": {
+        "input": "你好"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "插件阶段输出内容"
+              },
+              "input": {
+                "type": "string",
+                "description": "透传给下一步的输入"
+              }
+            },
+            "required": ["content"]
+          },
+          "msg": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "data", "msg"]
+      },
+      "outputExample": {
+        "code": 0,
+        "data": {
+          "content": "插件你好",
+          "input": "你好"
+        },
+        "msg": "success"
+      },
+      "use_ai": 0
+    }
+  ]
+}

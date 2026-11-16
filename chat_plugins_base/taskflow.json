@@ -1,0 +1,8 @@
+[
+  {
+    "plugin_uuid": "8f4d2a70-3c61-4b95-a8e2-6d1f0b7c9e53",
+    "plugin_name": "chat_plugins_base",
+    "desc": "接收插件阶段输入，返回带插件标记的内容",
+    "ffi_symbol": "post_chat"
+  }
+]

@@ -1,0 +1,20 @@
+name: Release chat_plugins_base
+
+on:
+  push:
+    tags:
+      - "chat_plugins_base-v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    uses: ./.github/workflows/publish-package.yml
+    with:
+      package: chat_plugins_base
+      kind: code
+      # mcp.json 使用 plugin_lib 规范的对象数组格式；旧版 dytes 清单校验
+      # 仍把 tools 当作文件名数组，因此发布时跳过 check。
+      args: --skip-check

@@ -1,0 +1,12 @@
+{
+  "prompts": [
+    {
+      "id": "chat_plugins_base_query",
+      "name": "插件基础",
+      "content": "base|插件|问候",
+      "category": "plugin",
+      "sort": 10,
+      "is_enabled": 1
+    }
+  ]
+}

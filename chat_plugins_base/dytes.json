@@ -1,0 +1,47 @@
+{
+  "name": "chat_plugins_base",
+  "uuid": "8f4d2a70-3c61-4b95-a8e2-6d1f0b7c9e53",
+  "version": "0.1.0",
+  "description": "插件阶段（chat_plugins）的基础能力",
+  "keywords": [
+    "chat",
+    "plugins",
+    "base"
+  ],
+  "author": "funxdata",
+  "type": "design_plugins",
+  "plugins_type": "chat_plugins",
+  "target": "common",
+  "targets": [
+    "common"
+  ],
+  "use_ai": false,
+  "mcp": "mcp.json",
+  "license": "MIT",
+  "exports": {
+    "./target/release/chat_plugins_base.dll": "chat_plugins_base.dll",
+    "./prompts.json": "prompts.json",
+    "./taskflow.json": "taskflow.json",
+    "./mcp.json": "mcp.json"
+  },
+  "platform-exports": {
+    "windows": {
+      "./target/release/chat_plugins_base.dll": "chat_plugins_base.dll",
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
+    },
+    "linux": {
+      "./target/release/libchat_plugins_base.so": "chat_plugins_base.so",
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
+    },
+    "macos": {
+      "./target/release/libchat_plugins_base.dylib": "chat_plugins_base.dylib",
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
+    }
+  }
+}
