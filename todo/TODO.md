@@ -10,6 +10,9 @@
   （`input`/`prompt` 返回 `prompts=["问候"]`、`outputs=["测试"+输入]`，空输入返回 `400102`）
 - [x] 发布 `think_base_call` 0.1.1：`taskflow.json` 改为规范四字段（`ffi_symbol = chat`），
   三平台 CI 发布成功；`plugins_lib` 文档与 issue 已同步
+- [x] 发布 `think_base_call` 0.1.3：`mcp.json` / `taskflow.json` 的 `ffi_symbol` 统一为
+  `post_chat`，三平台 CI 发布成功（0.1.2 的 linux 任务失败，升版重发后通过）
+- [x] 测试环境改为 `scripts/ffi_call.py` 直连动态库，不再使用 cyctron
 - [ ] 确认 `think_base_call` 技能安装方案（dytes 拍平 `skills/`，`plugin_lib` 未登记技能）
 
 ## 待办
