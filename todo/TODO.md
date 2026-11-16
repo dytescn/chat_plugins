@@ -16,7 +16,7 @@
 
 - [ ] 用真实 DeepSeek Key 在 `cloud_lib` 仓库跑一次 `chat` 冒烟测试
 - [ ] 用真实 SiliconFlow Key 在 `cloud_lib` 仓库跑一次 `chat` 冒烟测试
-- [ ] 在 `plugintest/` 中用 cyctron 联调 `cloud_lib`
+- [ ] 在 `plugintest/` 中用 `scripts/ffi_call.py` 直连联调 `cloud_lib`（不再使用 cyctron）
 - [ ] 验证 `setup.json` 写入的 `info.db` 配置能被 `cloud_lib` 读取
 - [ ] 在 `cloud_lib` 仓库按 dytes 流程发布 1.0.0
 

@@ -3,7 +3,7 @@
     {
       "name": "think_base_call",
       "uuid": "c3b8f1d4-6e2a-4f7b-8d91-5a0c7e3b2f46:think_base_call",
-      "ffi_symbol": "chat",
+      "ffi_symbol": "post_chat",
       "title": "think 阶段基础调用",
       "description": "接收一个字符串输入，返回关键字与内容；不访问文件、网络或数据库。",
       "inputSchema": {
