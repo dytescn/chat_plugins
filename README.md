@@ -19,6 +19,7 @@ Piksel 的 AI 对话插件集合。除 `think_base/`、`reply_base/` 资源包�
 | `chat_code_check/` | `chat_code_check` | `/chat_code_check` | `chat_code_check.dll` / `.dylib` / `.so` | 无 |
 | `chat_ioc/` | `chat_ioc` | `/chat_ioc` | `chat_ioc.dll` / `.dylib` / `.so` | 无 |
 | `chat_text_stats/` | `chat_text_stats` | `/chat_text_stats` | `chat_text_stats.dll` / `.dylib` / `.so` | 无 |
+| `think_base_call/` | `think_base_call` | `/think_base_call` | `think_base_call.dll` / `.dylib` / `.so` | 无（骨架） |
 | `think_base/` | `think_base` | 无（资源包） | 仅 `skills/`、`prompts.json` | 无 |
 | `reply_base/` | `reply_base` | 无（资源包） | 仅 `skills/`、`prompts.json` | 无 |
 
@@ -101,6 +102,7 @@ dytes install sys cloud_lib
 | `chat_code_check` | `chat_code_check-release.yml` | 代码（三平台） |
 | `chat_ioc` | `chat_ioc-release.yml` | 代码（三平台） |
 | `chat_text_stats` | `chat_text_stats-release.yml` | 代码（三平台） |
+| `think_base_call` | `think_base_call-release.yml` | 代码（三平台） |
 | `think_base` | `think_base-release.yml` | 资源（仅发布） |
 | `reply_base` | `reply_base-release.yml` | 资源（仅发布） |
 
@@ -135,6 +137,7 @@ chat_plugins/
 ├── chat_code_check/      # 对话代码检查插件
 ├── chat_ioc/             # 对话 IOC 提取插件
 ├── chat_text_stats/      # 对话文本统计插件
+├── think_base_call/      # think 阶段基础调用插件（骨架）
 ├── think_base/           # think 阶段资源包（skills + prompts.json）
 ├── reply_base/           # reply 阶段资源包（skills + prompts.json）
 ├── plugintest/           # 本地 cyctron 插件测试环境（运行产物不入库）
@@ -147,6 +150,7 @@ chat_plugins/
 
 各插件文档：
 
+- [think_base_call/README.md](think_base_call/README.md)
 - [think_base/README.md](think_base/README.md)
 - [reply_base/README.md](reply_base/README.md)
 - [do_test_chat/README.md](do_test_chat/README.md)

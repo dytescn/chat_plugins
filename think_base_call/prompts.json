@@ -1,0 +1,12 @@
+{
+  "prompts": [
+    {
+      "id": "think_base_call_greeting",
+      "name": "问候",
+      "content": "问候|你好",
+      "category": "think",
+      "sort": 10,
+      "is_enabled": 1
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "think_base_call",
+  "uuid": "c3b8f1d4-6e2a-4f7b-8d91-5a0c7e3b2f46",
+  "version": "0.1.0",
+  "description": "think 阶段的基础调用插件",
+  "keywords": [
+    "chat",
+    "think",
+    "call"
+  ],
+  "author": "funxdata",
+  "type": "design_plugins",
+  "plugins_type": "chat_think",
+  "target": "common",
+  "targets": [
+    "common"
+  ],
+  "use_ai": false,
+  "mcp": "mcp.json",
+  "license": "MIT",
+  "exports": {
+    "./target/release/think_base_call.dll": "think_base_call.dll",
+    "./skills/think_base_call.md": "think_base_call.md",
+    "./prompts.json": "prompts.json",
+    "./taskflow.json": "taskflow.json",
+    "./mcp.json": "mcp.json"
+  },
+  "platform-exports": {
+    "windows": {
+      "./target/release/think_base_call.dll": "think_base_call.dll",
+      "./skills/think_base_call.md": "think_base_call.md",
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
+    },
+    "linux": {
+      "./target/release/libthink_base_call.so": "think_base_call.so",
+      "./skills/think_base_call.md": "think_base_call.md",
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
+    },
+    "macos": {
+      "./target/release/libthink_base_call.dylib": "think_base_call.dylib",
+      "./skills/think_base_call.md": "think_base_call.md",
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
+    }
+  }
+}
