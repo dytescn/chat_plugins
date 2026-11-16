@@ -142,8 +142,7 @@ chat_plugins/
 ├── think_base_call/      # think 阶段基础调用插件（骨架）
 ├── think_base/           # think 阶段资源包（skills + prompts.json）
 ├── reply_base/           # reply 阶段资源包（skills + prompts.json）
-├── ts/                   # Deno FFI 测试脚本
-├── deno.json             # Deno 任务配置
+├── ts/                   # Deno FFI 测试脚本与任务配置（deno.json）
 ├── todo/                 # 待办与验证记录
 ├── skills/               # 开发、测试、联调、发布规范
 ├── README.md

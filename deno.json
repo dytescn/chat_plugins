@@ -1,5 +1,0 @@
-{
-  "tasks": {
-    "ffi": "deno run --allow-ffi --allow-read ts/ffi_test.ts"
-  }
-}

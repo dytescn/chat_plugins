@@ -11,8 +11,7 @@ chat_plugins/
 ├── reply_base/            # reply 阶段资源包（skills + prompts）
 ├── do_test_chat/          # 确定性测试聊天插件
 ├── runflow/               # 运行流程文档
-├── ts/                    # Deno FFI 测试脚本
-├── deno.json              # Deno 任务配置
+├── ts/                    # Deno FFI 测试脚本与任务配置（deno.json）
 ├── todo/                  # 待办与验证记录
 ├── skills/                # 开发规范（本目录）
 ├── README.md

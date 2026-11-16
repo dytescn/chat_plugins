@@ -47,5 +47,5 @@ dytes test .
 - [ ] `cargo test` 通过
 - [ ] `cargo build --release` 产物存在
 - [ ] `dytes test .` 返回 `OK: 包结构检查通过`
-- [ ] `deno task ffi --lib <产物> --input ...` 返回成功
+- [ ] `cd ts && deno task ffi --lib <产物> --input ...` 返回成功
 - [ ] 不把 `.dytes/`、`target/` 与运行数据提交到 git
