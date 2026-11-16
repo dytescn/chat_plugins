@@ -1,0 +1,8 @@
+[
+  {
+    "plugin_uuid": "2b7e9c41-5d83-4a6f-b0e4-7c19d2f8a365",
+    "plugin_name": "reply_base_call",
+    "desc": "接收回复阶段输入，返回带回复标记的内容",
+    "ffi_symbol": "post_chat"
+  }
+]

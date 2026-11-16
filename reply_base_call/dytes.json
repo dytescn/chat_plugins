@@ -1,0 +1,51 @@
+{
+  "name": "reply_base_call",
+  "uuid": "2b7e9c41-5d83-4a6f-b0e4-7c19d2f8a365",
+  "version": "0.1.0",
+  "description": "回复阶段（chat_reply）的基础能力",
+  "keywords": [
+    "chat",
+    "reply",
+    "base"
+  ],
+  "author": "funxdata",
+  "type": "design_plugins",
+  "plugins_type": "chat_reply",
+  "target": "common",
+  "targets": [
+    "common"
+  ],
+  "use_ai": false,
+  "mcp": "mcp.json",
+  "license": "MIT",
+  "exports": {
+    "./target/release/reply_base_call.dll": "reply_base_call.dll",
+    "./skills/reply_base_call.md": "reply_base_call.md",
+    "./prompts.json": "prompts.json",
+    "./taskflow.json": "taskflow.json",
+    "./mcp.json": "mcp.json"
+  },
+  "platform-exports": {
+    "windows": {
+      "./target/release/reply_base_call.dll": "reply_base_call.dll",
+      "./skills/reply_base_call.md": "reply_base_call.md",
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
+    },
+    "linux": {
+      "./target/release/libreply_base_call.so": "reply_base_call.so",
+      "./skills/reply_base_call.md": "reply_base_call.md",
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
+    },
+    "macos": {
+      "./target/release/libreply_base_call.dylib": "reply_base_call.dylib",
+      "./skills/reply_base_call.md": "reply_base_call.md",
+      "./prompts.json": "prompts.json",
+      "./taskflow.json": "taskflow.json",
+      "./mcp.json": "mcp.json"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "tools": [
+    {
+      "name": "reply_base_call",
+      "uuid": "2b7e9c41-5d83-4a6f-b0e4-7c19d2f8a365:reply_base_call",
+      "ffi_symbol": "post_chat",
+      "title": "回复阶段基础调用",
+      "description": "接收一个字符串输入，返回带回复标记的内容；不访问文件、网络或数据库。",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "回复阶段的输入"
+          }
+        },
+        "required": ["input"]
+      },
+      "inputExample": {
+        "input": "插件你好"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "回复阶段输出内容"
+              },
+              "input": {
+                "type": "string",
+                "description": "透传的输入"
+              }
+            },
+            "required": ["content"]
+          },
+          "msg": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "data", "msg"]
+      },
+      "outputExample": {
+        "code": 0,
+        "data": {
+          "content": "回复插件你好",
+          "input": "插件你好"
+        },
+        "msg": "success"
+      },
+      "use_ai": 0
+    }
+  ]
+}
