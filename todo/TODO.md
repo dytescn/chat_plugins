@@ -6,6 +6,8 @@
 - [x] 供应商调用合并到独立系统库 `dytescn/cloud_lib`
 - [x] 删除嵌套 `.git`，统一由 `chat_plugins` 管理
 - [x] 整理根 README 与插件 README
+- [x] 发布 `think_base_call` 0.1.0：三平台 CI 发布成功；本地 FFI 冒烟通过
+  （`input`/`prompt` 返回 `prompts=["问候"]`、`outputs=["测试"+输入]`，空输入返回 `400102`）
 
 ## 待办
 
